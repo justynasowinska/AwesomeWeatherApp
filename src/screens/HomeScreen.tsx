@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { TextInput } from 'react-native-paper';
 
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
@@ -9,24 +9,46 @@ interface HomeScreenProps {
 }
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
+  const [searchText, setSearchText] = useState('');
+
+  const handleClear = () => {
+    setSearchText('');
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Home Screen</Text>
-      <Button onPress={() => navigation.navigate('Details')}>
-        Go to Details
-      </Button>
-    </View>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled">
+        <TextInput
+          mode="outlined"
+          value={searchText}
+          onChangeText={setSearchText}
+          placeholder="Search for a city"
+          maxLength={50}
+          left={<TextInput.Icon icon="magnify" />}
+          right={
+            searchText ? (
+              <TextInput.Icon
+                icon="close"
+                onPress={handleClear}
+                forceTextInputFocus={false}
+              />
+            ) : null
+          }
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
-  text: {
-    marginBottom: 10,
+  scrollContent: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
   },
 });
 
