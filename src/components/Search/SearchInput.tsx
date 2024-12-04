@@ -25,9 +25,12 @@ const SearchInput = ({
       maxLength={50}
       left={
         isLoading ? (
-          <TextInput.Icon icon={ActivityIndicatorIcon} />
+          <TextInput.Icon
+            icon={ActivityIndicatorIcon}
+            testID="icon-left-loading"
+          />
         ) : (
-          <TextInput.Icon icon="magnify" />
+          <TextInput.Icon icon="magnify" testID="icon-left-magnify" />
         )
       }
       right={
@@ -36,6 +39,7 @@ const SearchInput = ({
             icon="close"
             onPress={onClear}
             forceTextInputFocus={false}
+            testID="icon-right-close"
           />
         ) : null
       }
