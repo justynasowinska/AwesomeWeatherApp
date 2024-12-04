@@ -9,21 +9,27 @@ const API_ENDPOINTS = {
   find: '/find',
 };
 
-export const searchCities = async (
+const SEARCH_CITIES_DEFAULT_PARAMS = {
+  type: 'like',
+  sort: 'population',
+  cnt: 10,
+};
+
+const searchCities = async (
   query: string,
-): Promise<OpenWeatherResponse> => {
+): Promise<OpenWeatherResponse | null> => {
   if (!query) {
-    throw new Error('Query is required');
+    return null;
   }
   const { data } = await axios.get(`${BASE_URL}/${API_ENDPOINTS.find}`, {
     params: {
       q: query,
       appid: API_KEY,
-      type: 'like',
-      sort: 'population',
-      cnt: 10,
+      ...SEARCH_CITIES_DEFAULT_PARAMS,
     },
   });
 
   return data;
 };
+
+export { API_ENDPOINTS, BASE_URL, SEARCH_CITIES_DEFAULT_PARAMS, searchCities };
