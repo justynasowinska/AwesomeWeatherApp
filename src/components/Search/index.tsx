@@ -1,4 +1,7 @@
-import useSearchCities, { Status } from 'hooks/useSearchCities';
+import useSearchCities, {
+  MIN_QUERY_LENGTH,
+  Status,
+} from 'hooks/useSearchCities';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { WeatherCity } from 'types/openWeather';
@@ -26,7 +29,7 @@ const Search = ({ onCitySelect }: SearchProps) => {
           isLoading={status === Status.FETCHING}
           onClear={handleClear}
         />
-        {query.length > 0 && (
+        {query.length >= MIN_QUERY_LENGTH && (
           <SearchResults
             data={data}
             status={status}
