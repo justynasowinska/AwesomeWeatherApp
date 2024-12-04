@@ -1,13 +1,21 @@
 import React from 'react';
-import { TextInput } from 'react-native-paper';
+import { ActivityIndicator, TextInput } from 'react-native-paper';
 
 interface SearchInputProps {
   value: string;
   onChange: (text: string) => void;
+  isLoading: boolean;
   onClear: () => void;
 }
 
-const SearchInput = ({ value, onChange, onClear }: SearchInputProps) => {
+const ActivityIndicatorIcon = () => <ActivityIndicator />;
+
+const SearchInput = ({
+  value,
+  onChange,
+  isLoading,
+  onClear,
+}: SearchInputProps) => {
   return (
     <TextInput
       mode="outlined"
@@ -15,7 +23,13 @@ const SearchInput = ({ value, onChange, onClear }: SearchInputProps) => {
       onChangeText={onChange}
       placeholder="Search for a city"
       maxLength={50}
-      left={<TextInput.Icon icon="magnify" />}
+      left={
+        isLoading ? (
+          <TextInput.Icon icon={ActivityIndicatorIcon} />
+        ) : (
+          <TextInput.Icon icon="magnify" />
+        )
+      }
       right={
         value ? (
           <TextInput.Icon

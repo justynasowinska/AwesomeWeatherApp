@@ -1,15 +1,12 @@
+import SearchInput from 'components/SearchInput';
+import useSearchCities, { Status } from 'hooks/useSearchCities';
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 
-import { NavigationProp, ParamListBase } from '@react-navigation/native';
-import SearchInput from 'components/SearchInput';
-
-interface HomeScreenProps {
-  navigation: NavigationProp<ParamListBase>;
-}
-
-const HomeScreen = ({ navigation }: HomeScreenProps) => {
+const HomeScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
+
+  const { data, status, error } = useSearchCities(searchText);
 
   const handleClear = () => {
     setSearchText('');
@@ -23,6 +20,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         <SearchInput
           value={searchText}
           onChange={setSearchText}
+          isLoading={status === Status.FETCHING}
           onClear={handleClear}
         />
       </ScrollView>
