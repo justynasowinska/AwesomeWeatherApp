@@ -3,4 +3,5 @@ module.exports = {
   moduleNameMapper: {
     'react-native-config': '<rootDir>/__mocks__/react-native-config.ts',
   },
+  setupFilesAfterEnv: ['./jest-setup.ts'],
 };
