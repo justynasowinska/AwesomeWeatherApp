@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { searchCitiesMockResponse } from '__mocks__/openWeatherResponseMock';
 import { searchCities } from 'api/openWeather';
-import { useSearchCities } from 'hooks/useSearchCities';
+import useSearchCities, { Status } from 'hooks/useSearchCities';
 
 jest.mock('api/openWeather');
 const mockedSearchCities = searchCities as jest.MockedFunction<
@@ -16,12 +16,12 @@ describe('useSearchCities', () => {
       useSearchCities('London'),
     );
 
-    expect(result.current.status).toBe('fetching');
+    expect(result.current.status).toBe(Status.FETCHING);
     expect(result.current.data).toEqual([]);
     expect(result.current.error).toBeNull();
     await waitForNextUpdate();
 
-    expect(result.current.status).toBe('success');
+    expect(result.current.status).toBe(Status.SUCCESS);
     expect(result.current.data).toEqual(searchCitiesMockResponse.list);
     expect(result.current.error).toBeNull();
   });
@@ -33,10 +33,10 @@ describe('useSearchCities', () => {
       useSearchCities('London'),
     );
 
-    expect(result.current.status).toBe('fetching');
+    expect(result.current.status).toBe(Status.FETCHING);
     await waitForNextUpdate();
 
-    expect(result.current.status).toBe('error');
+    expect(result.current.status).toBe(Status.ERROR);
     expect(result.current.error).toBe('Failed to fetch');
     expect(result.current.data).toEqual([]);
   });
@@ -44,7 +44,7 @@ describe('useSearchCities', () => {
   it('should reset state when query is empty', () => {
     const { result } = renderHook(() => useSearchCities(''));
 
-    expect(result.current.status).toBe('idle');
+    expect(result.current.status).toBe(Status.IDLE);
     expect(result.current.data).toEqual([]);
     expect(result.current.error).toBeNull();
   });
