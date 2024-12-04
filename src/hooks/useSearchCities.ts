@@ -2,9 +2,16 @@ import { searchCities } from 'api/openWeather';
 import { useEffect, useReducer } from 'react';
 import { WeatherCity } from 'types/openWeather';
 
+enum Status {
+  IDLE = 'idle',
+  FETCHING = 'fetching',
+  SUCCESS = 'success',
+  ERROR = 'error',
+}
+
 type State = {
   data: WeatherCity[];
-  status: 'idle' | 'fetching' | 'success' | 'error';
+  status: Status;
   error: string | null;
 };
 
@@ -16,18 +23,18 @@ type Action =
 
 const initialState: State = {
   data: [],
-  status: 'idle',
+  status: Status.IDLE,
   error: null,
 };
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'FETCH_INIT':
-      return { ...state, status: 'fetching', error: null };
+      return { ...state, status: Status.FETCHING, error: null };
     case 'FETCH_SUCCESS':
-      return { ...state, status: 'success', data: action.payload };
+      return { ...state, status: Status.SUCCESS, data: action.payload };
     case 'FETCH_FAILURE':
-      return { ...state, status: 'error', error: action.payload };
+      return { ...state, status: Status.ERROR, error: action.payload };
     case 'RESET':
       return { ...initialState };
     default:
@@ -35,7 +42,7 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-export const useSearchCities = (query: string) => {
+const useSearchCities = (query: string) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -65,3 +72,6 @@ export const useSearchCities = (query: string) => {
 
   return state;
 };
+
+export { Status };
+export default useSearchCities;
