@@ -32,6 +32,7 @@ const Search = ({ onCitySelect }: SearchProps) => {
   );
 
   const handleClear = () => {
+    setInputValue('');
     setQuery('');
   };
 
