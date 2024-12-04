@@ -30,7 +30,7 @@ const SearchResultsDropdown = ({
     if (status === Status.SUCCESS && data.length === 0) {
       return (
         <Text style={styles.message}>
-          No results found. Try something else.
+          No results yet. Keep typing or try something different.
         </Text>
       );
     }
