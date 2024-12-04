@@ -1,11 +1,17 @@
+import { NavigationProp } from '@react-navigation/native';
 import Search from 'components/Search';
+import { RootStackParamList } from 'navigation/AppNavigator';
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { WeatherCity } from 'types/openWeather';
 
-const HomeScreen = () => {
+interface HomeScreenProps {
+  navigation: NavigationProp<RootStackParamList, 'Home'>;
+}
+
+const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const handleCitySelect = (city: WeatherCity) => {
-    console.log('Selected City:', city);
+    navigation.navigate('Details', { city });
   };
 
   return (
