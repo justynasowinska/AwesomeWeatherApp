@@ -1,29 +1,16 @@
-import SearchInput from 'components/SearchInput';
-import useSearchCities, { Status } from 'hooks/useSearchCities';
-import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import Search from 'components/Search';
+import React from 'react';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import { WeatherCity } from 'types/openWeather';
 
-const HomeScreen = ({ navigation }) => {
-  const [searchText, setSearchText] = useState('');
-
-  const { data, status, error } = useSearchCities(searchText);
-
-  const handleClear = () => {
-    setSearchText('');
+const HomeScreen = () => {
+  const handleCitySelect = (city: WeatherCity) => {
+    console.log('Selected City:', city);
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled">
-        <SearchInput
-          value={searchText}
-          onChange={setSearchText}
-          isLoading={status === Status.FETCHING}
-          onClear={handleClear}
-        />
-      </ScrollView>
+      <Search onCitySelect={handleCitySelect} />
     </SafeAreaView>
   );
 };
@@ -31,10 +18,6 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-  },
-  scrollContent: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
   },
 });
 

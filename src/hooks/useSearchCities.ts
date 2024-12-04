@@ -74,4 +74,5 @@ const useSearchCities = (query: string) => {
 };
 
 export { Status };
+export type { State };
 export default useSearchCities;
