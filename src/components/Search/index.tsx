@@ -2,7 +2,8 @@ import useSearchCities, {
   MIN_QUERY_LENGTH,
   Status,
 } from 'hooks/useSearchCities';
-import React, { useState } from 'react';
+import debounce from 'lodash.debounce';
+import React, { useCallback, useMemo, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { WeatherCity } from 'types/openWeather';
 import SearchInput from './SearchInput';
@@ -13,8 +14,22 @@ interface SearchProps {
 }
 
 const Search = ({ onCitySelect }: SearchProps) => {
+  const [inputValue, setInputValue] = useState('');
   const [query, setQuery] = useState('');
   const { data, status, error } = useSearchCities(query);
+
+  const debouncedSetQuery = useMemo(
+    () => debounce((text: string) => setQuery(text), 300),
+    [],
+  );
+
+  const handleInputChange = useCallback(
+    (text: string) => {
+      setInputValue(text);
+      debouncedSetQuery(text);
+    },
+    [debouncedSetQuery],
+  );
 
   const handleClear = () => {
     setQuery('');
@@ -24,8 +39,8 @@ const Search = ({ onCitySelect }: SearchProps) => {
     <View style={styles.container}>
       <View style={styles.inputWrapper}>
         <SearchInput
-          value={query}
-          onChange={setQuery}
+          value={inputValue}
+          onChange={handleInputChange}
           isLoading={status === Status.FETCHING}
           onClear={handleClear}
         />
