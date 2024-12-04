@@ -48,7 +48,11 @@ const SearchResultsDropdown = ({
     );
   };
 
-  return <View style={styles.dropdown}>{renderContent()}</View>;
+  return (
+    <View style={styles.dropdown} testID="search-results">
+      {renderContent()}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
