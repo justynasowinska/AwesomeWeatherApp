@@ -31,6 +31,11 @@ const Search = ({ onCitySelect }: SearchProps) => {
     [debouncedSetQuery],
   );
 
+  const handleCitySelect = (city: WeatherCity) => {
+    onCitySelect(city);
+    handleClear();
+  };
+
   const handleClear = () => {
     setInputValue('');
     setQuery('');
@@ -50,7 +55,7 @@ const Search = ({ onCitySelect }: SearchProps) => {
             data={data}
             status={status}
             error={error}
-            onCitySelect={onCitySelect}
+            onCitySelect={handleCitySelect}
           />
         )}
       </View>
