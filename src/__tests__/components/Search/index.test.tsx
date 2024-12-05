@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
-import { searchCitiesMockResponse } from '__mocks__/openWeatherResponseMock';
+import { searchCitiesMockResponse } from '__mocks__/searchCitiesMockResponse';
 import Search from 'components/Search';
 import useSearchCities from 'hooks/useSearchCities';
 import React from 'react';

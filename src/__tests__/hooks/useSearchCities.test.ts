@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { searchCitiesMockResponse } from '__mocks__/openWeatherResponseMock';
+import { searchCitiesMockResponse } from '__mocks__/searchCitiesMockResponse';
 import { searchCities } from 'api/openWeather';
 import useSearchCities, { Status } from 'hooks/useSearchCities';
 

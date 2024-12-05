@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import { searchCitiesMockResponse } from '__mocks__/openWeatherResponseMock';
+import { searchCitiesMockResponse } from '__mocks__/searchCitiesMockResponse';
 import SearchResults from 'components/Search/SearchResults';
 import { Status } from 'hooks/useSearchCities';
 
