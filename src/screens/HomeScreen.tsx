@@ -5,7 +5,7 @@ import { useFavoritesContext } from 'context/FavoritesContext';
 import { RootStackParamList } from 'navigation/AppNavigator';
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { WeatherCity } from 'types/openWeather';
+import { City } from 'types/openWeather';
 
 interface HomeScreenProps {
   navigation: NavigationProp<RootStackParamList, 'Home'>;
@@ -14,7 +14,7 @@ interface HomeScreenProps {
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const { favorites, removeFromFavorites } = useFavoritesContext();
 
-  const handleCitySelect = (city: WeatherCity) => {
+  const handleCitySelect = (city: City) => {
     navigation.navigate('Details', { city });
   };
 

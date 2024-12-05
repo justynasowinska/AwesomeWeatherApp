@@ -5,12 +5,12 @@ import useSearchCities, {
 import debounce from 'lodash.debounce';
 import React, { useCallback, useMemo, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { WeatherCity } from 'types/openWeather';
+import { City } from 'types/openWeather';
 import SearchInput from './SearchInput';
 import SearchResults from './SearchResults';
 
 interface SearchProps {
-  onCitySelect: (city: WeatherCity) => void;
+  onCitySelect: (city: City) => void;
 }
 
 const Search = ({ onCitySelect }: SearchProps) => {
@@ -31,7 +31,7 @@ const Search = ({ onCitySelect }: SearchProps) => {
     [debouncedSetQuery],
   );
 
-  const handleCitySelect = (city: WeatherCity) => {
+  const handleCitySelect = (city: City) => {
     onCitySelect(city);
     handleClear();
   };

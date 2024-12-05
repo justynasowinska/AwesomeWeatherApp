@@ -1,12 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { WeatherCity } from 'types/openWeather';
+import { City } from 'types/openWeather';
 import DetailsScreen from '../screens/DetailsScreen';
 import HomeScreen from '../screens/HomeScreen';
 
 export type RootStackParamList = {
   Home: undefined;
-  Details: { city: WeatherCity };
+  Details: { city: City };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
