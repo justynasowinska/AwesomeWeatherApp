@@ -15,7 +15,7 @@ export const kelvinToCelsius = (kelvin: number): number => {
  * @returns String with all descriptions combined with first letter capitalized.
  */
 export const createWeatherDescription = (
-  weather: WeatherCity['weather'],
+  weather?: WeatherCity['weather'] | null,
 ): string => {
   if (!weather || weather.length === 0) {
     return '';
@@ -23,7 +23,7 @@ export const createWeatherDescription = (
 
   return weather
     .map(condition => condition.description)
-    .join(' ')
+    .join(', ')
     .replace(/^./, str => str.toUpperCase());
 };
 
