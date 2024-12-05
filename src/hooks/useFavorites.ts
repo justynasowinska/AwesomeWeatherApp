@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { WeatherCity } from 'types/openWeather';
+import { City } from 'types/openWeather';
 import useAsyncStorage from './useAsyncStorage';
 
 const FAVORITES_KEY = 'favorites';
@@ -10,7 +10,7 @@ const useFavorites = () => {
     save,
     load,
     clearAll,
-  } = useAsyncStorage<WeatherCity[]>(FAVORITES_KEY);
+  } = useAsyncStorage<City[]>(FAVORITES_KEY);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const useFavorites = () => {
     initializeFavorites();
   }, [load]);
 
-  const addToFavorites = async (city: WeatherCity) => {
+  const addToFavorites = async (city: City) => {
     try {
       const updatedFavorites = favorites ? [...favorites, city] : [city];
       await save(updatedFavorites);
