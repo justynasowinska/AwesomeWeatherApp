@@ -49,7 +49,7 @@ const useGetWeatherForCity = (
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    if (!(lat && lon)) {
+    if (typeof lat !== 'number' || typeof lon !== 'number') {
       return;
     }
 
