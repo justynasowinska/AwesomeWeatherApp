@@ -17,7 +17,11 @@ const FavoriteCityItem = ({
   onPress,
 }: FavoriteCityItemProps) => {
   const renderFavoritestIcon = () => (
-    <IconButton icon="heart" onPress={() => onRemove(city.id)} />
+    <IconButton
+      icon="heart"
+      testID="favorite-icon"
+      onPress={() => onRemove(city.id)}
+    />
   );
 
   return (
