@@ -1,9 +1,15 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useFavoritesContext } from 'context/FavoritesContext';
+import useGetWeatherForCity, { Status } from 'hooks/useGetWeatherForCity';
 import { RootStackParamList } from 'navigation/AppNavigator';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Avatar, IconButton, Text } from 'react-native-paper';
+import {
+  ActivityIndicator,
+  Avatar,
+  IconButton,
+  Text,
+} from 'react-native-paper';
 import {
   createWeatherDescription,
   getWeatherIconUrl,
@@ -21,6 +27,8 @@ const DetailsScreen = () => {
     [city, favorites],
   );
 
+  const { data, status } = useGetWeatherForCity(city.coord.lat, city.coord.lon);
+
   const handleToggleFavorite = () => {
     if (isFavoriteCity) {
       removeFromFavorites(city.id);
@@ -34,6 +42,34 @@ const DetailsScreen = () => {
     }
   };
 
+  const renderContent = useCallback(() => {
+    if (status === Status.FETCHING) {
+      return <ActivityIndicator size="large" />;
+    }
+
+    if (status === Status.ERROR || !data) {
+      return <Text style={styles.error}>Failed to load weather data.</Text>;
+    }
+
+    return (
+      <>
+        <Avatar.Image
+          source={{
+            uri: getWeatherIconUrl(data.weather[0]?.icon),
+          }}
+          size={100}
+          style={styles.weatherIcon}
+        />
+        <Text style={styles.temperature}>
+          {kelvinToCelsius(data.main.temp)}°C
+        </Text>
+        <Text style={styles.description}>
+          {createWeatherDescription(data.weather)}
+        </Text>
+      </>
+    );
+  }, [data, status]);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -46,19 +82,7 @@ const DetailsScreen = () => {
           style={styles.favoriteButton}
         />
       </View>
-      <Avatar.Image
-        source={{
-          uri: getWeatherIconUrl(city?.weather[0]?.icon),
-        }}
-        size={100}
-        style={styles.weatherIcon}
-      />
-      <Text style={styles.temperature}>
-        {kelvinToCelsius(city.main.temp)}°C
-      </Text>
-      <Text style={styles.description}>
-        {createWeatherDescription(city.weather)}
-      </Text>
+      {renderContent()}
     </View>
   );
 };
@@ -94,6 +118,11 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 20,
+    textAlign: 'center',
+  },
+  error: {
+    fontSize: 16,
+    color: 'red',
     textAlign: 'center',
   },
 });
