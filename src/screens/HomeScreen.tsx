@@ -21,7 +21,11 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <Search onCitySelect={handleCitySelect} />
-      <FavoritesList favorites={favorites} onRemove={removeFromFavorites} />
+      <FavoritesList
+        favorites={favorites}
+        onRemove={removeFromFavorites}
+        onCitySelect={handleCitySelect}
+      />
     </SafeAreaView>
   );
 };

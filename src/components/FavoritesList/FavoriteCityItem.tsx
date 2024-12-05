@@ -6,11 +6,16 @@ import { City } from 'types/openWeather';
 interface FavoriteCityItemProps {
   city: City;
   onRemove: (cityId: number) => void;
+  onPress: (city: City) => void;
 }
 
 const CityIcon = () => <List.Icon icon="city" />;
 
-const FavoriteCityItem = ({ city, onRemove }: FavoriteCityItemProps) => {
+const FavoriteCityItem = ({
+  city,
+  onRemove,
+  onPress,
+}: FavoriteCityItemProps) => {
   const renderFavoritestIcon = () => (
     <IconButton icon="heart" onPress={() => onRemove(city.id)} />
   );
@@ -22,6 +27,7 @@ const FavoriteCityItem = ({ city, onRemove }: FavoriteCityItemProps) => {
       left={CityIcon}
       right={renderFavoritestIcon}
       style={styles.item}
+      onPress={() => onPress(city)}
     />
   );
 };

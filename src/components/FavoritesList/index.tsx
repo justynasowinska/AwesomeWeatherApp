@@ -7,9 +7,14 @@ import FavoriteCityItem from './FavoriteCityItem';
 interface FavoritesListProps {
   favorites: City[];
   onRemove: (cityId: number) => void;
+  onCitySelect: (city: City) => void;
 }
 
-const FavoritesList = ({ favorites, onRemove }: FavoritesListProps) => {
+const FavoritesList = ({
+  favorites,
+  onRemove,
+  onCitySelect,
+}: FavoritesListProps) => {
   const renderListHeaderComponent = () => (
     <Text variant="titleMedium" style={styles.title}>
       Your Favorites Places:
@@ -26,7 +31,11 @@ const FavoritesList = ({ favorites, onRemove }: FavoritesListProps) => {
       data={favorites}
       keyExtractor={item => item.id.toString()}
       renderItem={({ item }) => (
-        <FavoriteCityItem city={item} onRemove={onRemove} />
+        <FavoriteCityItem
+          city={item}
+          onRemove={onRemove}
+          onPress={onCitySelect}
+        />
       )}
       ItemSeparatorComponent={Divider}
       ListEmptyComponent={renderListEmptyComponent}
