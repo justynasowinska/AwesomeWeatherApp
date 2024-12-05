@@ -1,5 +1,7 @@
 import { NavigationProp } from '@react-navigation/native';
+import FavoritesList from 'components/FavoritesList';
 import Search from 'components/Search';
+import useFavorites from 'hooks/useFavorites';
 import { RootStackParamList } from 'navigation/AppNavigator';
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
@@ -10,6 +12,8 @@ interface HomeScreenProps {
 }
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
+  const { favorites, removeFromFavorites } = useFavorites();
+
   const handleCitySelect = (city: WeatherCity) => {
     navigation.navigate('Details', { city });
   };
@@ -17,6 +21,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <Search onCitySelect={handleCitySelect} />
+      <FavoritesList favorites={favorites} onRemove={removeFromFavorites} />
     </SafeAreaView>
   );
 };
