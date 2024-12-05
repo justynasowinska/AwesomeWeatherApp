@@ -1,6 +1,6 @@
-import { OpenWeatherResponse } from 'types/openWeather';
+import { OpenWeatherSearchCityResponse } from 'types/openWeather';
 
-export const searchCitiesMockResponse: OpenWeatherResponse = {
+export const searchCitiesMockResponse: OpenWeatherSearchCityResponse = {
   message: 'accurate',
   cod: '200',
   count: 5,

@@ -1,8 +1,25 @@
-export interface OpenWeatherResponse {
+export interface OpenWeatherSearchCityResponse {
   message: string;
   cod: string;
   count: number;
   list: WeatherCity[];
+}
+
+export interface OpenWeatherCityWeatherResponse {
+  coord: Coordinates;
+  weather: Weather[];
+  base: string;
+  main: WeatherMain;
+  visibility: number;
+  wind: Wind;
+  rain?: Precipitation;
+  clouds: Clouds;
+  dt: number;
+  sys: System;
+  timezone: number;
+  id: number;
+  name: string;
+  cod: number;
 }
 
 export interface WeatherCity {
@@ -38,10 +55,15 @@ export interface WeatherMain {
 export interface Wind {
   speed: number;
   deg: number;
+  gust?: number;
 }
 
 export interface System {
   country: string;
+  sunrise?: number;
+  sunset?: number;
+  type?: number;
+  id?: number;
 }
 
 export interface Precipitation {
