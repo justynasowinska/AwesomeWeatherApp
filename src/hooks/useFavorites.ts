@@ -1,22 +1,21 @@
+import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { City } from 'types/openWeather';
-import useAsyncStorage from './useAsyncStorage';
 
 const FAVORITES_KEY = 'favorites';
 
 const useFavorites = () => {
-  const {
-    value: favorites,
-    save,
-    load,
-    clearAll,
-  } = useAsyncStorage<City[]>(FAVORITES_KEY);
+  const { getItem, setItem, removeItem } = useAsyncStorage(FAVORITES_KEY);
+  const [favorites, setFavorites] = useState<City[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const initializeFavorites = async () => {
       try {
-        await load();
+        const storedFavorites = await getItem();
+        if (storedFavorites) {
+          setFavorites(JSON.parse(storedFavorites));
+        }
       } catch (e) {
         console.error('Failed to load favorites:', e);
         setError('Failed to load favorites');
@@ -24,12 +23,14 @@ const useFavorites = () => {
     };
 
     initializeFavorites();
-  }, [load]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const addToFavorites = async (city: City) => {
     try {
-      const updatedFavorites = favorites ? [...favorites, city] : [city];
-      await save(updatedFavorites);
+      const updatedFavorites = [...favorites, city];
+      await setItem(JSON.stringify(updatedFavorites));
+      setFavorites(updatedFavorites);
     } catch (e) {
       console.error('Failed to add favorite:', e);
       setError('Failed to add favorite');
@@ -38,9 +39,9 @@ const useFavorites = () => {
 
   const removeFromFavorites = async (cityId: number) => {
     try {
-      const updatedFavorites =
-        favorites?.filter(city => city.id !== cityId) || [];
-      await save(updatedFavorites);
+      const updatedFavorites = favorites.filter(city => city.id !== cityId);
+      await setItem(JSON.stringify(updatedFavorites));
+      setFavorites(updatedFavorites);
     } catch (e) {
       console.error('Failed to remove favorite:', e);
       setError('Failed to remove favorite');
@@ -49,7 +50,8 @@ const useFavorites = () => {
 
   const clearAllFavorites = async () => {
     try {
-      await clearAll();
+      await removeItem();
+      setFavorites([]);
     } catch (e) {
       console.error('Failed to clear favorites:', e);
       setError('Failed to clear favorites');
