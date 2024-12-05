@@ -1,5 +1,5 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
-import useFavorites from 'hooks/useFavorites';
+import { useFavoritesContext } from 'context/FavoritesContext';
 import { RootStackParamList } from 'navigation/AppNavigator';
 import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -13,7 +13,8 @@ import {
 const DetailsScreen = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Details'>>();
   const { city } = route.params;
-  const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
+  const { favorites, addToFavorites, removeFromFavorites } =
+    useFavoritesContext();
 
   const isFavoriteCity = useMemo(
     () => favorites.some(favorite => favorite.id === city.id),
