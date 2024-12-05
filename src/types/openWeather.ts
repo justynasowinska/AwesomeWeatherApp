@@ -58,3 +58,5 @@ export interface Weather {
   description: string;
   icon: string;
 }
+
+export type City = Pick<WeatherCity, 'id' | 'name' | 'coord' | 'sys'>;
