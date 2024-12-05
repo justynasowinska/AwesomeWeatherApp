@@ -1,6 +1,7 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
+import useFavorites from 'hooks/useFavorites';
 import { RootStackParamList } from 'navigation/AppNavigator';
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Avatar, IconButton, Text } from 'react-native-paper';
 import {
@@ -12,10 +13,24 @@ import {
 const DetailsScreen = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Details'>>();
   const { city } = route.params;
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
+
+  const isFavoriteCity = useMemo(
+    () => favorites.some(favorite => favorite.id === city.id),
+    [city, favorites],
+  );
 
   const handleToggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+    if (isFavoriteCity) {
+      removeFromFavorites(city.id);
+    } else {
+      addToFavorites({
+        id: city.id,
+        name: city.name,
+        coord: city.coord,
+        sys: city.sys,
+      });
+    }
   };
 
   return (
@@ -23,7 +38,7 @@ const DetailsScreen = () => {
       <View style={styles.header}>
         <Text style={styles.cityName}>{city.name}</Text>
         <IconButton
-          icon={isFavorite ? 'heart' : 'heart-outline'}
+          icon={isFavoriteCity ? 'heart' : 'heart-outline'}
           onPress={handleToggleFavorite}
           size={34}
           accessibilityLabel="Add to favorites"
