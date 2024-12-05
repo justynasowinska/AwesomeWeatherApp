@@ -41,7 +41,7 @@ const searchCities = async (
 const getWeatherForCity = async ({
   lat,
   lon,
-}: Coordinates): Promise<OpenWeatherCityWeatherResponse | null> => {
+}: Coordinates): Promise<OpenWeatherCityWeatherResponse> => {
   const { data } = await axios.get(`${BASE_URL}/${API_ENDPOINTS.weather}`, {
     params: {
       lat,
