@@ -1,97 +1,65 @@
-import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen } from '@testing-library/react-native';
 import { searchCitiesMockResponse } from '__mocks__/searchCitiesMockResponse';
+
 import Search from 'components/Search';
-import useSearchCities from 'hooks/useSearchCities';
+import { Status } from 'hooks/useSearchCities';
 import React from 'react';
 
-jest.mock('hooks/useSearchCities', () => ({
-  __esModule: true,
-  default: jest.fn(),
-  MIN_QUERY_LENGTH: 3,
-  Status: {
-    IDLE: 'idle',
-    FETCHING: 'fetching',
-    SUCCESS: 'success',
-    ERROR: 'error',
-  },
-}));
-
-const mockUseSearchCities = useSearchCities as jest.Mock;
-
 describe('Search', () => {
-  it('updates the query and displays results when input changes', async () => {
-    mockUseSearchCities.mockReturnValue({
-      data: searchCitiesMockResponse.list,
-      status: 'success',
-      error: null,
-    });
+  const defaultProps = {
+    inputValue: '',
+    data: [],
+    status: Status.IDLE,
+    error: null,
+    showResults: false,
+    onInputChange: jest.fn(),
+    onCitySelect: jest.fn(),
+    onInputClear: jest.fn(),
+  };
 
-    const onCitySelect = jest.fn();
-    render(<Search onCitySelect={onCitySelect} />);
+  it('calls onInputChange with proper text when input text is changed', async () => {
+    const onInputChange = jest.fn();
+    render(<Search {...defaultProps} onInputChange={onInputChange} />);
 
     const input = screen.getByPlaceholderText('Search for a city');
 
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      fireEvent.changeText(input, 'London');
-      jest.runAllTimers();
-    });
+    fireEvent.changeText(input, 'London');
 
-    expect(await screen.findByText('London, UK')).toBeOnTheScreen();
+    expect(onInputChange).toHaveBeenCalledWith('London');
   });
 
-  it('clears the input when clear is triggered', async () => {
-    mockUseSearchCities.mockReturnValue({
-      data: searchCitiesMockResponse.list,
-      status: 'success',
-      error: null,
-    });
-
-    const onCitySelect = jest.fn();
-    render(<Search onCitySelect={onCitySelect} />);
-
-    const input = screen.getByPlaceholderText('Search for a city');
-
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      fireEvent.changeText(input, 'City');
-      jest.runAllTimers();
-    });
-
-    expect(input.props.value).toBe('City');
+  it('calls onInputClear when the clear button is pressed', async () => {
+    const onInputClear = jest.fn();
+    render(
+      <Search
+        {...defaultProps}
+        inputValue="London"
+        onInputClear={onInputClear}
+      />,
+    );
 
     const clearButton = screen.getByTestId('icon-right-close');
     fireEvent.press(clearButton);
 
-    expect(input.props.value).toBe('');
+    expect(onInputClear).toHaveBeenCalled();
   });
 
-  it('renders results only when query length is >= MIN_QUERY_LENGTH', async () => {
-    mockUseSearchCities.mockReturnValue({
-      data: [],
-      status: 'idle',
-      error: null,
-    });
+  it('renders results only when showResults is true', async () => {
+    render(
+      <Search
+        {...defaultProps}
+        data={searchCitiesMockResponse.list}
+        status={Status.SUCCESS}
+        showResults={true}
+      />,
+    );
 
-    const onCitySelect = jest.fn();
-    render(<Search onCitySelect={onCitySelect} />);
+    expect(screen.getByText('New York, US')).toBeOnTheScreen();
+  });
 
-    const input = screen.getByPlaceholderText('Search for a city');
-
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      fireEvent.changeText(input, 'Lo');
-      jest.runAllTimers();
-    });
+  it('does not render results when showResults is false', async () => {
+    render(<Search {...defaultProps} showResults={false} />);
 
     expect(screen.queryByTestId('search-results')).not.toBeOnTheScreen();
-
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      fireEvent.changeText(input, 'Lon');
-      jest.runAllTimers();
-    });
-
-    expect(screen.getByTestId('search-results')).toBeOnTheScreen();
   });
 });
