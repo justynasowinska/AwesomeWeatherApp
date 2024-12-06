@@ -1,61 +1,46 @@
-import useSearchCities, {
-  MIN_QUERY_LENGTH,
-  Status,
-} from 'hooks/useSearchCities';
-import debounce from 'lodash.debounce';
-import React, { useCallback, useMemo, useState } from 'react';
+import { Status } from 'hooks/useSearchCities';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { City } from 'types/openWeather';
+import { City, WeatherCity } from 'types/openWeather';
 import SearchInput from './SearchInput';
 import SearchResults from './SearchResults';
 
 interface SearchProps {
+  inputValue: string;
+  data: WeatherCity[];
+  status: Status;
+  error: string | null;
+  showResults: boolean;
+  onInputChange: (value: string) => void;
   onCitySelect: (city: City) => void;
+  onInputClear: () => void;
 }
 
-const Search = ({ onCitySelect }: SearchProps) => {
-  const [inputValue, setInputValue] = useState('');
-  const [query, setQuery] = useState('');
-  const { data, status, error } = useSearchCities(query);
-
-  const debouncedSetQuery = useMemo(
-    () => debounce((text: string) => setQuery(text), 300),
-    [],
-  );
-
-  const handleInputChange = useCallback(
-    (text: string) => {
-      setInputValue(text);
-      debouncedSetQuery(text);
-    },
-    [debouncedSetQuery],
-  );
-
-  const handleCitySelect = (city: City) => {
-    onCitySelect(city);
-    handleClear();
-  };
-
-  const handleClear = () => {
-    setInputValue('');
-    setQuery('');
-  };
-
+const Search = ({
+  inputValue,
+  data,
+  status,
+  error,
+  showResults,
+  onInputChange,
+  onCitySelect,
+  onInputClear,
+}: SearchProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.inputWrapper}>
         <SearchInput
           value={inputValue}
-          onChange={handleInputChange}
+          onChange={onInputChange}
           isLoading={status === Status.FETCHING}
-          onClear={handleClear}
+          onClear={onInputClear}
         />
-        {query.length >= MIN_QUERY_LENGTH && (
+        {showResults && (
           <SearchResults
             data={data}
             status={status}
             error={error}
-            onCitySelect={handleCitySelect}
+            onCitySelect={onCitySelect}
           />
         )}
       </View>
