@@ -23,6 +23,8 @@ const SearchInput = ({
       onChangeText={onChange}
       placeholder="Search for a city"
       maxLength={50}
+      autoCorrect={false}
+      autoComplete="off"
       left={
         isLoading ? (
           <TextInput.Icon
