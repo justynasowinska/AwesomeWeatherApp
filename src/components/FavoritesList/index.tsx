@@ -40,6 +40,7 @@ const FavoritesList = ({
       ItemSeparatorComponent={Divider}
       ListEmptyComponent={renderListEmptyComponent}
       ListHeaderComponent={renderListHeaderComponent}
+      keyboardShouldPersistTaps="handled"
       style={styles.list}
     />
   );

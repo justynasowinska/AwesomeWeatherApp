@@ -43,6 +43,7 @@ const SearchResultsDropdown = ({
           <SearchResultItem city={item} onPress={() => onCitySelect(item)} />
         )}
         ItemSeparatorComponent={Divider}
+        keyboardShouldPersistTaps="handled"
         style={styles.list}
       />
     );
