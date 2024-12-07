@@ -53,11 +53,13 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         onInputChange={handleInputChange}
         onCitySelect={handleCitySelect}
         onInputClear={handleInputClear}
+        testID="search-view"
       />
       <FavoritesList
         favorites={favorites}
         onRemove={removeFromFavorites}
         onCitySelect={handleCitySelect}
+        testID="favorites-list"
       />
     </SafeAreaView>
   );

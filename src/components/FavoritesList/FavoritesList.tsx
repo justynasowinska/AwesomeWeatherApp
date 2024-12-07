@@ -1,10 +1,10 @@
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, FlatListProps, StyleSheet, View } from 'react-native';
 import { Divider, Text } from 'react-native-paper';
 import { City } from 'types/openWeather';
 import FavoriteCityItem from './FavoriteCityItem';
 
-interface FavoritesListProps {
+interface FavoritesListProps extends Omit<FlatListProps<City>, 'renderItem' | 'data'> {
   favorites: City[];
   onRemove: (cityId: number) => void;
   onCitySelect: (city: City) => void;
@@ -14,6 +14,7 @@ const FavoritesList = ({
   favorites,
   onRemove,
   onCitySelect,
+  ...props
 }: FavoritesListProps) => {
   const renderListHeaderComponent = () => (
     <Text variant="titleMedium" style={styles.title}>
@@ -42,6 +43,7 @@ const FavoritesList = ({
       ListHeaderComponent={renderListHeaderComponent}
       keyboardShouldPersistTaps="handled"
       style={styles.list}
+      {...props}
     />
   );
 };

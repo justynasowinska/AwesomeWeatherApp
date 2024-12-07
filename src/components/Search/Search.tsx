@@ -1,10 +1,10 @@
 import { SearchInput, SearchResults } from 'components/Search';
 import { Status } from 'hooks/useSearchCities';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ViewProps } from 'react-native';
 import { City, WeatherCity } from 'types/openWeather';
 
-interface SearchProps {
+interface SearchProps extends ViewProps {
   inputValue: string;
   data: WeatherCity[];
   status: Status;
@@ -24,9 +24,10 @@ const Search = ({
   onInputChange,
   onCitySelect,
   onInputClear,
+  ...containerProps
 }: SearchProps) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} {...containerProps}>
       <View style={styles.inputWrapper}>
         <SearchInput
           value={inputValue}

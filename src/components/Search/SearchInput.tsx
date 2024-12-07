@@ -25,6 +25,7 @@ const SearchInput = ({
       maxLength={50}
       autoCorrect={false}
       autoComplete="off"
+      testID="search-input"
       left={
         isLoading ? (
           <TextInput.Icon
