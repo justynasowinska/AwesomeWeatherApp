@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
-import FavoritesList from 'components/FavoritesList';
+import { FavoritesList } from 'components/FavoritesList';
 import React from 'react';
 import { City } from 'types/openWeather';
 

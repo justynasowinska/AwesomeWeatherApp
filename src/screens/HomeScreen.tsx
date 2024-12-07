@@ -1,6 +1,6 @@
 import { NavigationProp } from '@react-navigation/native';
-import FavoritesList from 'components/FavoritesList';
-import Search from 'components/Search';
+import { FavoritesList } from 'components/FavoritesList';
+import { Search } from 'components/Search';
 import { useFavoritesContext } from 'context/FavoritesContext';
 import useSearchCities, { MIN_QUERY_LENGTH } from 'hooks/useSearchCities';
 import debounce from 'lodash.debounce';

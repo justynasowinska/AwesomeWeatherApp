@@ -1,9 +1,9 @@
+import { SearchResultsItem } from 'components/Search';
 import { State as SearchState, Status } from 'hooks/useSearchCities';
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Divider, Text } from 'react-native-paper';
 import { WeatherCity } from 'types/openWeather';
-import SearchResultItem from './SearchResultsItem';
 
 interface SearchResultsDropdownProps {
   data: SearchState['data'];
@@ -40,7 +40,7 @@ const SearchResultsDropdown = ({
         data={data}
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
-          <SearchResultItem city={item} onPress={() => onCitySelect(item)} />
+          <SearchResultsItem city={item} onPress={() => onCitySelect(item)} />
         )}
         ItemSeparatorComponent={Divider}
         keyboardShouldPersistTaps="handled"

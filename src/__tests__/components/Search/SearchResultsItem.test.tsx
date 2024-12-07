@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
-import SearchResultItem from 'components/Search/SearchResultsItem';
+import { SearchResultsItem } from 'components/Search';
 import React from 'react';
 import { WeatherCity } from 'types/openWeather';
 
@@ -24,7 +24,7 @@ const mockCity: WeatherCity = {
 
 describe('SearchResultItem', () => {
   it('renders correctly with city data', () => {
-    render(<SearchResultItem city={mockCity} onPress={jest.fn()} />);
+    render(<SearchResultsItem city={mockCity} onPress={jest.fn()} />);
 
     expect(screen.getByText('London, UK')).toBeOnTheScreen();
     expect(screen.getByText('Lat: 12.3, Lon: -45.6')).toBeOnTheScreen();
@@ -32,7 +32,7 @@ describe('SearchResultItem', () => {
 
   it('calls onPress when clicked', () => {
     const handlePress = jest.fn();
-    render(<SearchResultItem city={mockCity} onPress={handlePress} />);
+    render(<SearchResultsItem city={mockCity} onPress={handlePress} />);
 
     fireEvent.press(screen.getByText('London, UK'));
 
