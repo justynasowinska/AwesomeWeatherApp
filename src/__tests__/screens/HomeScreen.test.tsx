@@ -19,8 +19,6 @@ const mockNavigation = {
   navigate: jest.fn(),
 } as unknown as NavigationProp<RootStackParamList, 'Home'>;
 
-jest.useFakeTimers();
-
 describe('HomeScreen', () => {
   const mockCity: City = {
     id: 1,
