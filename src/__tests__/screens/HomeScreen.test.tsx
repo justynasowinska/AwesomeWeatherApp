@@ -7,10 +7,6 @@ import React from 'react';
 import HomeScreen from 'screens/HomeScreen';
 import { City } from 'types/openWeather';
 
-jest.mock('@react-native-async-storage/async-storage', () =>
-	require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
-);
-
 // Mock useFavoritesContext
 jest.mock('context/FavoritesContext');
 const mockedUseFavoritesContext = useFavoritesContext as jest.Mock;

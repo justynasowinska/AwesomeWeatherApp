@@ -2,10 +2,6 @@ import { renderHook } from '@testing-library/react-hooks';
 import useFavorites from 'hooks/useFavorites';
 import { City } from 'types/openWeather';
 
-jest.mock('@react-native-async-storage/async-storage', () =>
-	require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
-);
-
 describe('useFavorites hook', () => {
   const mockCity: City = { id: 123, name: 'Test City', sys: { country: 'PL' }, coord: { lon: 1, lat: 2 } };
   const secondCity: City = { id: 456, name: 'Another City', sys: { country: 'PL' }, coord: { lon: 3, lat: 4 } };

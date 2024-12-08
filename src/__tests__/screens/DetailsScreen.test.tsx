@@ -7,10 +7,6 @@ import { IconButton } from 'react-native-paper';
 import DetailsScreen from 'screens/DetailsScreen';
 import { City } from 'types/openWeather';
 
-jest.mock('@react-native-async-storage/async-storage', () =>
-	require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
-);
-
 // Mock hooks
 jest.mock('@react-navigation/native', () => ({
   useRoute: jest.fn(),

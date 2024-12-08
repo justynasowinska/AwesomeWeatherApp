@@ -4,10 +4,6 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from 'navigation/AppNavigator';
 
-jest.mock('@react-native-async-storage/async-storage', () =>
-	require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
-);
-
 describe('AppNavigator', () => {
   it('renders Home screen as the initial route', async () => {
     render(

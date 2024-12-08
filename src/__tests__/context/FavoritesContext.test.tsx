@@ -6,9 +6,6 @@ import { Text } from 'react-native';
 import { City } from 'types/openWeather';
 
 jest.mock('hooks/useFavorites');
-jest.mock('@react-native-async-storage/async-storage', () =>
-	require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
-);
 
 describe('FavoritesProvider', () => {
   it('provides data and functions from useFavorites', () => {
