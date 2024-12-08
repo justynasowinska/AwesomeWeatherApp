@@ -1,4 +1,5 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { ErrorBanner } from 'components/ErrorBanner';
 import { useFavoritesContext } from 'context/FavoritesContext';
 import useGetWeatherForCity, { Status } from 'hooks/useGetWeatherForCity';
 import { RootStackParamList } from 'navigation/AppNavigator';
@@ -19,7 +20,7 @@ import {
 const DetailsScreen = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Details'>>();
   const { city } = route.params;
-  const { favorites, addToFavorites, removeFromFavorites } =
+  const { favorites, error: favoritesError, addToFavorites, removeFromFavorites, clearError } =
     useFavoritesContext();
 
   const isFavoriteCity = useMemo(
@@ -27,7 +28,7 @@ const DetailsScreen = () => {
     [city, favorites],
   );
 
-  const { data, status } = useGetWeatherForCity(city.coord.lat, city.coord.lon);
+  const { data, status, error } = useGetWeatherForCity(city.coord.lat, city.coord.lon);
 
   const handleToggleFavorite = () => {
     if (isFavoriteCity) {
@@ -48,7 +49,8 @@ const DetailsScreen = () => {
     }
 
     if (status === Status.ERROR || !data) {
-      return <Text style={styles.error}>Failed to load weather data.</Text>;
+      const errorMessage = error || 'Failed to load weather data.';
+      return <Text style={styles.error}>{errorMessage}</Text>;
     }
 
     return (
@@ -68,10 +70,15 @@ const DetailsScreen = () => {
         </Text>
       </>
     );
-  }, [data, status]);
+  }, [data, status, error]);
 
   return (
     <View style={styles.container}>
+      <ErrorBanner
+        visible={Boolean(favoritesError)}
+        error={favoritesError}
+        onClosePress={clearError}
+      />
       <View style={styles.header}>
         <Text style={styles.cityName}>{city.name}</Text>
         <IconButton
