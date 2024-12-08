@@ -6,7 +6,6 @@ import useSearchCities, { MIN_QUERY_LENGTH } from 'hooks/useSearchCities';
 import debounce from 'lodash.debounce';
 import { RootStackParamList } from 'navigation/AppNavigator';
 import React, { useCallback, useMemo, useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
 import { City } from 'types/openWeather';
 
 interface HomeScreenProps {
@@ -43,7 +42,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <>
       <Search
         inputValue={inputValue}
         data={data}
@@ -61,14 +60,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         onCitySelect={handleCitySelect}
         testID="favorites-list"
       />
-    </SafeAreaView>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
-});
 
 export default HomeScreen;
