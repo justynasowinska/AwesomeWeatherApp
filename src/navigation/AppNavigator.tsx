@@ -14,8 +14,16 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const AppNavigator = () => {
   return (
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Details" component={DetailsScreen} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Details"
+        component={DetailsScreen}
+        options={{ title: 'Weather Details' }}
+      />
     </Stack.Navigator>
   );
 };

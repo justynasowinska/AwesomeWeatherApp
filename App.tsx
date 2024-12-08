@@ -10,18 +10,18 @@ import AppNavigator from './src/navigation/AppNavigator';
 
 const App = () => {
   return (
-    <PaperProvider>
-      <NavigationContainer onReady={() => BootSplash.hide()}>
-        <FavoritesProvider>
+    <NavigationContainer onReady={() => BootSplash.hide()}>
+      <FavoritesProvider>
+        <PaperProvider>
           <SafeAreaView
             style={styles.safeArea}
             edges={['top', 'left', 'right']}>
             <OfflineBanner />
             <AppNavigator />
           </SafeAreaView>
-        </FavoritesProvider>
-      </NavigationContainer>
-    </PaperProvider>
+        </PaperProvider>
+      </FavoritesProvider>
+    </NavigationContainer>
   );
 };
 
