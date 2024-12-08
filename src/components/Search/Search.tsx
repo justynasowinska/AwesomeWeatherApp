@@ -27,7 +27,7 @@ const Search = ({
   ...containerProps
 }: SearchProps) => {
   return (
-    <View style={styles.container} {...containerProps}>
+    <View style={styles.container} {...containerProps} >
       <View style={styles.inputWrapper}>
         <SearchInput
           value={inputValue}

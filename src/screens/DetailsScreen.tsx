@@ -44,7 +44,7 @@ const DetailsScreen = () => {
 
   const renderContent = useCallback(() => {
     if (status === Status.FETCHING) {
-      return <ActivityIndicator size="large" />;
+      return <ActivityIndicator size="large" accessibilityLabel="Loading weather data" />;
     }
 
     if (status === Status.ERROR || !data) {
@@ -78,7 +78,11 @@ const DetailsScreen = () => {
           icon={isFavoriteCity ? 'heart' : 'heart-outline'}
           onPress={handleToggleFavorite}
           size={34}
-          accessibilityLabel="Add to favorites"
+          accessibilityLabel={
+            isFavoriteCity
+              ? `Remove ${city.name} from favorites`
+              : `Add ${city.name} to favorites`
+          }
           style={styles.favoriteButton}
         />
       </View>

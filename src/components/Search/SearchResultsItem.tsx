@@ -12,6 +12,8 @@ const SearchResultItem = ({ city, onPress }: SearchResultItemProps) => {
     <List.Item
       title={`${city.name}, ${city.sys.country}`}
       description={`Lat: ${city.coord.lat}, Lon: ${city.coord.lon}`}
+      accessibilityRole="button"
+      accessibilityLabel={`${city.name}, ${city.sys.country}`}
       onPress={onPress}
     />
   );

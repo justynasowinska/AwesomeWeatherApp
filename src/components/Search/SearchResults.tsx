@@ -44,6 +44,8 @@ const SearchResultsDropdown = ({
         )}
         ItemSeparatorComponent={Divider}
         keyboardShouldPersistTaps="handled"
+        accessibilityLabel="Search results list"
+        accessibilityHint="Select a city from the list to see its weather forecast"
         style={styles.list}
       />
     );

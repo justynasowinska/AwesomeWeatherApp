@@ -31,6 +31,7 @@ const SearchInput = ({
           <TextInput.Icon
             icon={ActivityIndicatorIcon}
             testID="icon-left-loading"
+            accessibilityLabel="Loading city search results"
           />
         ) : (
           <TextInput.Icon icon="magnify" testID="icon-left-magnify" />
@@ -43,6 +44,7 @@ const SearchInput = ({
             onPress={onClear}
             forceTextInputFocus={false}
             testID="icon-right-close"
+            accessibilityLabel="Clear search input"
           />
         ) : null
       }
