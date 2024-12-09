@@ -8,7 +8,6 @@ import {
   adaptNavigationTheme,
   MD3DarkTheme,
   MD3LightTheme,
-  useTheme,
 } from 'react-native-paper';
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -31,18 +30,31 @@ const darkThemeForNavigation: Theme = {
 
 const darkTheme = {
   ...CombinedDarkTheme,
+  colors: {
+    ...CombinedDarkTheme.colors,
+    primary: '#027aff',
+    secondary: '#FFCC03',
+    background: '#121212',
+    surface: '#1F1F1F',
+    onSurface: '#E0E0E0',
+  },
 };
 
 const lightTheme = {
   ...CombinedDefaultTheme,
+  colors: {
+    ...CombinedDefaultTheme.colors,
+    primary: '#027aff',
+    secondary: '#FFCC03',
+    background: '#FFFFFF',
+    surface: '#F5F5F5',
+    onSurface: '#212121',
+  },
 };
-
-const useAppTheme = () => useTheme();
 
 export {
   darkTheme,
   darkThemeForNavigation,
   lightTheme,
   lightThemeForNavigation,
-  useAppTheme,
 };
