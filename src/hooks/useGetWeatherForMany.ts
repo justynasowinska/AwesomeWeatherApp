@@ -19,8 +19,9 @@ type State = {
 
 type Action =
   | { type: 'FETCH_INIT' }
-  | { type: 'FETCH_SUCCESS'; payload: WeatherForCities }
-  | { type: 'FETCH_FAILURE'; payload: string };
+  | { type: 'FETCH_SUCCESS'; payload: WeatherForCities | null }
+  | { type: 'FETCH_FAILURE'; payload: string }
+  | { type: 'RESET' };
 
 const initialState: State = {
   data: null,
@@ -36,6 +37,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, status: Status.SUCCESS, data: action.payload };
     case 'FETCH_FAILURE':
       return { ...state, status: Status.ERROR, error: action.payload };
+    case 'RESET':
+      return initialState;
     default:
       throw new Error('Unsupported action type');
   }
@@ -46,6 +49,7 @@ const useGetWeatherForMany = (cityIds: number[]) => {
 
   useEffect(() => {
     if (!cityIds.length) {
+      dispatch({ type: 'RESET' });
       return;
     }
 
