@@ -39,6 +39,7 @@ const FavoriteCityItem = ({
 const styles = StyleSheet.create({
   item: {
     marginBottom: 8,
+    paddingRight: 0,
   },
 });
 
