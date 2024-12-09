@@ -1,5 +1,6 @@
 import React from 'react';
-import { ActivityIndicator, TextInput } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { ActivityIndicator, TextInput, useTheme } from 'react-native-paper';
 
 interface SearchInputProps {
   value: string;
@@ -16,12 +17,23 @@ const SearchInput = ({
   isLoading,
   onClear,
 }: SearchInputProps) => {
+  const { colors } = useTheme();
+
   return (
     <TextInput
-      mode="outlined"
+      mode="flat"
       value={value}
       onChangeText={onChange}
       placeholder="Search for a city"
+      underlineColor="transparent"
+      activeUnderlineColor="transparent"
+      selectionColor={colors.onSurface}
+      cursorColor={colors.onSurface}
+      style={[
+        styles.input,
+        { backgroundColor: colors.surface, color: colors.onSurface },
+      ]}
+      placeholderTextColor={colors.onSurfaceVariant}
       maxLength={50}
       autoCorrect={false}
       autoComplete="off"
@@ -40,7 +52,7 @@ const SearchInput = ({
       right={
         value ? (
           <TextInput.Icon
-            icon="close"
+            icon="close-circle-outline"
             onPress={onClear}
             forceTextInputFocus={false}
             testID="icon-right-close"
@@ -53,3 +65,12 @@ const SearchInput = ({
 };
 
 export default SearchInput;
+
+const styles = StyleSheet.create({
+  input: {
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+  },
+});
