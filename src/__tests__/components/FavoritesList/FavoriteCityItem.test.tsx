@@ -2,13 +2,25 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import { FavoriteCityItem } from 'components/FavoritesList';
 
 import React from 'react';
-import { City } from 'types/openWeather';
+import { WeatherCity } from 'types/openWeather';
 
-const mockCity: City = {
+const mockCity: WeatherCity = {
   id: 1,
   name: 'Test City',
   coord: { lat: 0, lon: 0 },
+  main: {
+    temp: 273.15,
+    feels_like: 0,
+    temp_min: 0,
+    temp_max: 0,
+    pressure: 0,
+    humidity: 0,
+  },
+  weather: [{ id: 1, main: 'Clear', icon: '01d', description: 'Clear sky' }],
   sys: { country: 'TC' },
+  dt: 0,
+  wind: { speed: 0, deg: 0 },
+  clouds: { all: 0 },
 };
 
 describe('FavoriteCityItem', () => {
@@ -29,7 +41,8 @@ describe('FavoriteCityItem', () => {
     );
 
     expect(screen.getByText('Test City, TC')).toBeOnTheScreen();
-    expect(screen.getByText('Lat: 0, Lon: 0')).toBeOnTheScreen();
+    expect(screen.getByText('Clear sky')).toBeOnTheScreen();
+    expect(screen.getByText('0°C')).toBeOnTheScreen();
   });
 
   it('calls onPress with city data when the item is pressed', () => {

@@ -1,20 +1,44 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { FavoritesList } from 'components/FavoritesList';
 import React from 'react';
-import { City } from 'types/openWeather';
+import { WeatherCity } from 'types/openWeather';
 
-const mockFavorites: City[] = [
+const mockFavorites: WeatherCity[] = [
   {
     id: 1,
     name: 'Test City 1',
     coord: { lat: 0, lon: 0 },
+    main: {
+      temp: 273.15,
+      feels_like: 0,
+      temp_min: 0,
+      temp_max: 0,
+      pressure: 0,
+      humidity: 0,
+    },
+    weather: [{ id: 1, main: 'Clear', icon: '01d', description: 'Clear sky' }],
     sys: { country: 'TC' },
+    dt: 0,
+    wind: { speed: 0, deg: 0 },
+    clouds: { all: 0 },
   },
   {
     id: 2,
     name: 'Test City 2',
-    coord: { lat: 10, lon: 10 },
+    coord: { lat: 0, lon: 0 },
+    main: {
+      temp: 273.15,
+      feels_like: 0,
+      temp_min: 0,
+      temp_max: 0,
+      pressure: 0,
+      humidity: 0,
+    },
+    weather: [{ id: 2, main: 'Clear', icon: '01d', description: 'Clear sky' }],
     sys: { country: 'TC' },
+    dt: 0,
+    wind: { speed: 0, deg: 0 },
+    clouds: { all: 0 },
   },
 ];
 
@@ -32,10 +56,11 @@ describe('FavoritesList', () => {
         favorites={mockFavorites}
         onRemove={mockOnRemove}
         onCitySelect={mockOnCitySelect}
+        isLoading={false}
+        error={null}
       />,
     );
 
-    expect(screen.getByText('Your Favorites Places:')).toBeOnTheScreen();
     expect(screen.getByText('Test City 1, TC')).toBeOnTheScreen();
     expect(screen.getByText('Test City 2, TC')).toBeOnTheScreen();
   });
@@ -46,10 +71,40 @@ describe('FavoritesList', () => {
         favorites={[]}
         onRemove={mockOnRemove}
         onCitySelect={mockOnCitySelect}
+        isLoading={false}
+        error={null}
       />,
     );
 
     expect(screen.getByText('No favorite cities yet.')).toBeOnTheScreen();
+  });
+
+  it('renders a loading message when the list is loading', () => {
+    render(
+      <FavoritesList
+        favorites={[]}
+        onRemove={mockOnRemove}
+        onCitySelect={mockOnCitySelect}
+        isLoading
+        error={null}
+      />,
+    );
+
+    expect(screen.getByText('Loading Your Favorites...')).toBeOnTheScreen();
+  });
+
+  it('renders an error message when an error occurs', () => {
+    render(
+      <FavoritesList
+        favorites={[]}
+        onRemove={mockOnRemove}
+        onCitySelect={mockOnCitySelect}
+        isLoading={false}
+        error="An error occurred."
+      />,
+    );
+
+    expect(screen.getByText('An error occurred.')).toBeOnTheScreen();
   });
 
   it('calls onCitySelect with city data when a city is pressed', () => {
@@ -58,6 +113,8 @@ describe('FavoritesList', () => {
         favorites={mockFavorites}
         onRemove={mockOnRemove}
         onCitySelect={mockOnCitySelect}
+        isLoading={false}
+        error={null}
       />,
     );
 
@@ -71,6 +128,8 @@ describe('FavoritesList', () => {
         favorites={mockFavorites}
         onRemove={mockOnRemove}
         onCitySelect={mockOnCitySelect}
+        isLoading={false}
+        error={null}
       />,
     );
 

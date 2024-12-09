@@ -1,38 +1,55 @@
 import { NavigationProp } from '@react-navigation/native';
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { useFavoritesContext } from 'context/FavoritesContext';
+import useGetWeatherForMany from 'hooks/useGetWeatherForMany';
 import useSearchCities from 'hooks/useSearchCities';
 import { RootStackParamList } from 'navigation/AppNavigator';
 import React from 'react';
 import HomeScreen from 'screens/HomeScreen';
-import { City } from 'types/openWeather';
 
-// Mock useFavoritesContext
 jest.mock('context/FavoritesContext');
 const mockedUseFavoritesContext = useFavoritesContext as jest.Mock;
 
-// Mock useSearchCities
 jest.mock('hooks/useSearchCities');
 const mockedUseSearchCities = useSearchCities as jest.Mock;
+
+jest.mock('hooks/useGetWeatherForMany');
+const mockedUseGetWeatherForMany = useGetWeatherForMany as jest.Mock;
 
 const mockNavigation = {
   navigate: jest.fn(),
 } as unknown as NavigationProp<RootStackParamList, 'Home'>;
 
 describe('HomeScreen', () => {
-  const mockCity: City = {
+  const mockFavoriteCity = {
     id: 1,
     name: 'Test City',
     sys: { country: 'US' },
     coord: { lon: -74, lat: 40 },
   };
 
+  const mockSearchCity = {
+    id: 2,
+    name: 'Test City 2',
+    sys: { country: 'US' },
+    coord: { lon: -74, lat: 40 },
+  };
+
+  const weatherData = {
+    list: [
+      {
+        ...mockFavoriteCity,
+        main: { temp: 273.15 },
+        weather: [{ icon: '01d' }],
+      },
+    ],
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.clearAllTimers();
 
     mockedUseFavoritesContext.mockReturnValue({
-      favorites: [mockCity],
+      favorites: [mockFavoriteCity],
       removeFromFavorites: jest.fn(),
       addToFavorites: jest.fn(),
       clearAllFavorites: jest.fn(),
@@ -40,28 +57,26 @@ describe('HomeScreen', () => {
       error: null,
     });
 
-  });
-
-  it('renders the search and favorites list components', () => {
-    mockedUseSearchCities.mockReturnValueOnce({
-      data: [],
-      status: 'idle',
+    mockedUseSearchCities.mockReturnValue({
+      data: [mockSearchCity],
+      status: 'success',
       error: null,
     });
 
-    render(<HomeScreen navigation={mockNavigation} />);
+    mockedUseGetWeatherForMany.mockReturnValue({
+      data: weatherData,
+      status: 'success',
+      error: null,
+    });
+  });
 
+  it('renders the search and favorites list components', () => {
+    render(<HomeScreen navigation={mockNavigation} />);
     expect(screen.getByTestId('search-view')).toBeOnTheScreen();
     expect(screen.getByTestId('favorites-list')).toBeOnTheScreen();
   });
 
   it('updates query on input change and shows results when length >= MIN_QUERY_LENGTH', async () => {
-    mockedUseSearchCities.mockReturnValue({
-      data: [mockCity],
-      status: 'success',
-      error: null,
-    });
-
     render(<HomeScreen navigation={mockNavigation} />);
     const input = screen.getByPlaceholderText('Search for a city');
 
@@ -71,11 +86,12 @@ describe('HomeScreen', () => {
       jest.runAllTimers();
     });
 
-    expect(await screen.findByTestId('search-results')).toBeOnTheScreen();
+    expect(await screen.findByText('Test City 2, US')).toBeOnTheScreen();
   });
 
-  it('clears input and query when clear button is pressed', async () => {
+  it('navigates to Details screen when a city is selected from search results', async () => {
     render(<HomeScreen navigation={mockNavigation} />);
+
     const input = screen.getByPlaceholderText('Search for a city');
 
     // eslint-disable-next-line testing-library/no-unnecessary-act
@@ -84,9 +100,30 @@ describe('HomeScreen', () => {
       jest.runAllTimers();
     });
 
+    const cityItem = await screen.findByText('Test City 2, US');
+
+    fireEvent.press(cityItem);
+
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('Details', {
+      city: mockSearchCity,
+    });
+  });
+
+  it('displays weather data for favorite cities', () => {
+    render(<HomeScreen navigation={mockNavigation} />);
+    const tempText = screen.getByText('0°C');
+
+    expect(tempText).toBeOnTheScreen();
+  });
+
+  it('handles search input clear', async () => {
+    render(<HomeScreen navigation={mockNavigation} />);
+    const input = screen.getByPlaceholderText('Search for a city');
+    fireEvent.changeText(input, 'Test');
     const clearButton = screen.getByTestId('icon-right-close');
+
     fireEvent.press(clearButton);
 
-    expect(input).toHaveProp('value', '');
+    expect(input.props.value).toBe('');
   });
 });
