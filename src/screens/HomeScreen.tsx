@@ -2,7 +2,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { FavoritesList } from 'components/FavoritesList';
 import { Search } from 'components/Search';
 import { useFavoritesContext } from 'context/FavoritesContext';
-import useGetWeatherForMany from 'hooks/useGetWeatherForMany';
+import useGetWeatherForMany, { Status } from 'hooks/useGetWeatherForMany';
 import useSearchCities, { MIN_QUERY_LENGTH } from 'hooks/useSearchCities';
 import debounce from 'lodash.debounce';
 import { RootStackParamList } from 'navigation/AppNavigator';
@@ -66,6 +66,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         onRemove={removeFromFavorites}
         onCitySelect={handleCitySelect}
         testID="favorites-list"
+        isLoading={status === Status.FETCHING}
+        error={status === Status.ERROR ? error : null}
       />
     </>
   );
