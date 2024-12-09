@@ -52,14 +52,16 @@ const SearchResultsDropdown = ({
         keyboardShouldPersistTaps="handled"
         accessibilityLabel="Search results list"
         accessibilityHint="Select a city from the list to see its weather forecast"
-        style={styles.list}
       />
     );
   };
 
   return (
     <View
-      style={[styles.dropdown, { backgroundColor: colors.background }]}
+      style={[
+        styles.dropdown,
+        { backgroundColor: colors.background, borderColor: colors.surface },
+      ]}
       testID="search-results">
       {renderContent()}
     </View>
@@ -76,9 +78,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     maxHeight: 400,
     zIndex: 1000,
-  },
-  list: {
-    paddingHorizontal: 8,
   },
   message: {
     textAlign: 'center',
