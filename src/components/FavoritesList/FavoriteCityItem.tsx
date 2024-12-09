@@ -1,6 +1,7 @@
+import { FavoritesIcon } from 'components/common/FavoritesIcon';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { IconButton, List } from 'react-native-paper';
+import { List } from 'react-native-paper';
 import { City } from 'types/openWeather';
 
 interface FavoriteCityItemProps {
@@ -17,11 +18,7 @@ const FavoriteCityItem = ({
   onPress,
 }: FavoriteCityItemProps) => {
   const renderFavoritestIcon = () => (
-    <IconButton
-      icon="heart"
-      testID="favorite-icon"
-      onPress={() => onRemove(city.id)}
-    />
+    <FavoritesIcon isFavorite={true} onPress={() => onRemove(city.id)} />
   );
 
   return (

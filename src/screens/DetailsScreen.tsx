@@ -1,17 +1,12 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { FavoritesIcon } from 'components/common/FavoritesIcon';
 import { ErrorBanner } from 'components/ErrorBanner';
 import { useFavoritesContext } from 'context/FavoritesContext';
 import useGetWeatherForCity, { Status } from 'hooks/useGetWeatherForCity';
 import { RootStackParamList } from 'navigation/AppNavigator';
 import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import {
-  ActivityIndicator,
-  Avatar,
-  IconButton,
-  Text,
-  useTheme,
-} from 'react-native-paper';
+import { ActivityIndicator, Avatar, Text, useTheme } from 'react-native-paper';
 import {
   createWeatherDescription,
   getWeatherIconUrl,
@@ -100,16 +95,16 @@ const DetailsScreen = () => {
       />
       <View style={styles.header}>
         <Text style={styles.cityName}>{city.name}</Text>
-        <IconButton
-          icon={isFavoriteCity ? 'heart' : 'heart-outline'}
+        <FavoritesIcon
+          isFavorite={isFavoriteCity}
           onPress={handleToggleFavorite}
+          style={styles.favoriteButton}
           size={34}
           accessibilityLabel={
             isFavoriteCity
               ? `Remove ${city.name} from favorites`
               : `Add ${city.name} to favorites`
           }
-          style={styles.favoriteButton}
         />
       </View>
       {renderContent()}
