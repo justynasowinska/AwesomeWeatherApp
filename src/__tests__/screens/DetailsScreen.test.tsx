@@ -7,7 +7,6 @@ import { IconButton } from 'react-native-paper';
 import DetailsScreen from 'screens/DetailsScreen';
 import { City } from 'types/openWeather';
 
-// Mock hooks
 jest.mock('@react-navigation/native', () => ({
   useRoute: jest.fn(),
 }));
@@ -86,7 +85,6 @@ describe('DetailsScreen', () => {
     expect(screen.queryByText('Clear sky')).not.toBeOnTheScreen();
   });
 
-  // describe this test
   it('shows heart icon if city is not favorite and adds it when pressed', () => {
     const addToFavoritesMock = jest.fn();
     mockedUseFavoritesContext.mockReturnValueOnce({
