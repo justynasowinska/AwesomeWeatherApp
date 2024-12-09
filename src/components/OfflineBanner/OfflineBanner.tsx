@@ -1,10 +1,11 @@
 import { useNetInfo } from '@react-native-community/netinfo';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Icon, Text } from 'react-native-paper';
+import { Icon, Text, useTheme } from 'react-native-paper';
 
 const OfflineBanner = () => {
   const { isConnected } = useNetInfo();
+  const { colors } = useTheme();
 
   if (isConnected === null || isConnected) {
     return null;
@@ -12,10 +13,12 @@ const OfflineBanner = () => {
 
   return (
     <View
-      style={styles.banner}
+      style={[styles.banner, { backgroundColor: colors.error }]}
       accessibilityLabel="Offline. Some features may not be available.">
-      <Icon source="wifi-off" size={20} color="white" />
-      <Text style={styles.text}>You are offline</Text>
+      <Icon source="wifi-off" size={20} color={colors.onError} />
+      <Text style={[styles.text, { color: colors.onError }]}>
+        You are offline
+      </Text>
     </View>
   );
 };
@@ -25,7 +28,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     top: 0,
     width: '100%',
-    backgroundColor: 'red',
     paddingVertical: 6,
     paddingHorizontal: 10,
     flexDirection: 'row',
@@ -35,7 +37,6 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 12,
-    color: 'white',
     fontWeight: '600',
   },
 });

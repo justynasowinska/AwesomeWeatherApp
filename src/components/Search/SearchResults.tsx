@@ -2,7 +2,7 @@ import { SearchResultsItem } from 'components/Search';
 import { State as SearchState, Status } from 'hooks/useSearchCities';
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { Divider, Text } from 'react-native-paper';
+import { Divider, Text, useTheme } from 'react-native-paper';
 import { WeatherCity } from 'types/openWeather';
 
 interface SearchResultsDropdownProps {
@@ -18,13 +18,19 @@ const SearchResultsDropdown = ({
   error,
   onCitySelect,
 }: SearchResultsDropdownProps) => {
+  const { colors } = useTheme();
+
   const renderContent = () => {
     if (status === Status.FETCHING) {
       return <Text style={styles.message}>Loading...</Text>;
     }
 
     if (status === Status.ERROR && error) {
-      return <Text style={[styles.message, styles.error]}>Error: {error}</Text>;
+      return (
+        <Text style={[styles.message, { color: colors.error }]}>
+          Error: {error}
+        </Text>
+      );
     }
 
     if (status === Status.SUCCESS && data.length === 0) {
@@ -52,7 +58,9 @@ const SearchResultsDropdown = ({
   };
 
   return (
-    <View style={styles.dropdown} testID="search-results">
+    <View
+      style={[styles.dropdown, { backgroundColor: colors.background }]}
+      testID="search-results">
       {renderContent()}
     </View>
   );
@@ -66,7 +74,6 @@ const styles = StyleSheet.create({
     right: 0,
     borderWidth: 1,
     borderRadius: 8,
-    backgroundColor: 'white',
     maxHeight: 400,
     zIndex: 1000,
   },
@@ -76,9 +83,6 @@ const styles = StyleSheet.create({
   message: {
     textAlign: 'center',
     padding: 16,
-  },
-  error: {
-    color: 'red',
   },
 });
 

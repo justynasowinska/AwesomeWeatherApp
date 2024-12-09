@@ -10,6 +10,7 @@ import {
   Avatar,
   IconButton,
   Text,
+  useTheme,
 } from 'react-native-paper';
 import {
   createWeatherDescription,
@@ -20,15 +21,24 @@ import {
 const DetailsScreen = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Details'>>();
   const { city } = route.params;
-  const { favorites, error: favoritesError, addToFavorites, removeFromFavorites, clearError } =
-    useFavoritesContext();
+  const {
+    favorites,
+    error: favoritesError,
+    addToFavorites,
+    removeFromFavorites,
+    clearError,
+  } = useFavoritesContext();
+  const { colors } = useTheme();
 
   const isFavoriteCity = useMemo(
     () => favorites.some(favorite => favorite.id === city.id),
     [city, favorites],
   );
 
-  const { data, status, error } = useGetWeatherForCity(city.coord.lat, city.coord.lon);
+  const { data, status, error } = useGetWeatherForCity(
+    city.coord.lat,
+    city.coord.lon,
+  );
 
   const handleToggleFavorite = () => {
     if (isFavoriteCity) {
@@ -45,12 +55,21 @@ const DetailsScreen = () => {
 
   const renderContent = useCallback(() => {
     if (status === Status.FETCHING) {
-      return <ActivityIndicator size="large" accessibilityLabel="Loading weather data" />;
+      return (
+        <ActivityIndicator
+          size="large"
+          accessibilityLabel="Loading weather data"
+        />
+      );
     }
 
     if (status === Status.ERROR || !data) {
       const errorMessage = error || 'Failed to load weather data.';
-      return <Text style={styles.error}>{errorMessage}</Text>;
+      return (
+        <Text style={[styles.error, { color: colors.error }]}>
+          {errorMessage}
+        </Text>
+      );
     }
 
     return (
@@ -70,7 +89,7 @@ const DetailsScreen = () => {
         </Text>
       </>
     );
-  }, [data, status, error]);
+  }, [data, status, error, colors.error]);
 
   return (
     <View style={styles.container}>
@@ -133,7 +152,6 @@ const styles = StyleSheet.create({
   },
   error: {
     fontSize: 16,
-    color: 'red',
     textAlign: 'center',
   },
 });
