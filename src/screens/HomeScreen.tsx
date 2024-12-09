@@ -25,6 +25,12 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
   const { data: dataForFavorites } = useGetWeatherForMany(cityIds);
 
+  const favoritesWithWeather = useMemo(() => {
+    return dataForFavorites?.list.filter(city => {
+      return favorites.some(favorite => favorite.id === city.id);
+    });
+  }, [dataForFavorites?.list, favorites]);
+
   const debouncedSetQuery = useMemo(
     () => debounce((text: string) => setQuery(text), 300),
     [],
@@ -62,7 +68,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         testID="search-view"
       />
       <FavoritesList
-        favorites={dataForFavorites?.list}
+        favorites={favoritesWithWeather}
         onRemove={removeFromFavorites}
         onCitySelect={handleCitySelect}
         testID="favorites-list"
