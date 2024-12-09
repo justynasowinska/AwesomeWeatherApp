@@ -9,10 +9,10 @@ enum Status {
   ERROR = 'error',
 }
 
-type WeatherForCities = OpenWeatherGroupCityWeatherResponse['list'];
+type WeatherForCities = OpenWeatherGroupCityWeatherResponse;
 
 type State = {
-  data: WeatherForCities;
+  data: WeatherForCities | null;
   status: Status;
   error: string | null;
 };
@@ -23,7 +23,7 @@ type Action =
   | { type: 'FETCH_FAILURE'; payload: string };
 
 const initialState: State = {
-  data: [],
+  data: null,
   status: Status.IDLE,
   error: null,
 };
@@ -55,7 +55,7 @@ const useGetWeatherForMany = (cityIds: number[]) => {
       try {
         const result = await getWeatherForManyCities(cityIds);
 
-        dispatch({ type: 'FETCH_SUCCESS', payload: result?.list || [] });
+        dispatch({ type: 'FETCH_SUCCESS', payload: result });
       } catch (error: unknown) {
         dispatch({
           type: 'FETCH_FAILURE',

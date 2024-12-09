@@ -22,10 +22,10 @@ export interface OpenWeatherCityWeatherResponse {
   cod: number;
 }
 
-export type OpenWeatherGroupCityWeatherResponse = Pick<
-  OpenWeatherSearchCityResponse,
-  'count' | 'list'
->;
+export interface OpenWeatherGroupCityWeatherResponse {
+  cnt: number;
+  list: WeatherCity[];
+}
 
 export interface WeatherCity {
   id: number;

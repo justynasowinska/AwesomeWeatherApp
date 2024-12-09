@@ -4,6 +4,7 @@ import {
   API_ENDPOINTS,
   BASE_URL,
   getWeatherForCity,
+  getWeatherForManyCities,
   SEARCH_CITIES_DEFAULT_PARAMS,
   searchCities,
 } from 'api/openWeather';
@@ -68,6 +69,42 @@ describe('getWeatherForCity', () => {
     mockedAxios.get.mockRejectedValueOnce(new Error('API Error'));
 
     await expect(getWeatherForCity({ lat: 0, lon: 0 })).rejects.toThrow(
+      'API Error',
+    );
+  });
+});
+
+describe('getWeatherForManyCities', () => {
+  it('should fetch weather data for multiple cities', async () => {
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        cnt: searchCitiesMockResponse.count,
+        list: searchCitiesMockResponse.list,
+      },
+    });
+    const cityIds = [1, 2, 3];
+
+    const result = await getWeatherForManyCities(cityIds);
+
+    expect(mockedAxios.get).toHaveBeenCalledWith(
+      `${BASE_URL}/${API_ENDPOINTS.group}`,
+      {
+        params: {
+          id: '1,2,3',
+          appid: expect.any(String),
+        },
+      },
+    );
+    expect(result).toEqual({
+      cnt: searchCitiesMockResponse.count,
+      list: searchCitiesMockResponse.list,
+    });
+  });
+
+  it('should throw an error on failed API call', async () => {
+    mockedAxios.get.mockRejectedValueOnce(new Error('API Error'));
+
+    await expect(getWeatherForManyCities([1, 2, 3])).rejects.toThrow(
       'API Error',
     );
   });
