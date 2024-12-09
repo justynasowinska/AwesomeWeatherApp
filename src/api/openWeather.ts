@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   Coordinates,
   OpenWeatherCityWeatherResponse,
+  OpenWeatherGroupCityWeatherResponse,
   OpenWeatherSearchCityResponse,
 } from 'types/openWeather';
 
@@ -12,6 +13,7 @@ const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 const API_ENDPOINTS = {
   find: '/find',
   weather: '/weather',
+  group: '/group',
 };
 
 const SEARCH_CITIES_DEFAULT_PARAMS = {
@@ -52,10 +54,23 @@ const getWeatherForCity = async ({
   return data;
 };
 
+const getWeatherForManyCities = async (
+  cityIds: number[],
+): Promise<OpenWeatherGroupCityWeatherResponse> => {
+  const { data } = await axios.get(`${BASE_URL}/${API_ENDPOINTS.group}`, {
+    params: {
+      id: cityIds.join(','),
+      appid: API_KEY,
+    },
+  });
+  return data;
+};
+
 export {
   API_ENDPOINTS,
   BASE_URL,
   getWeatherForCity,
+  getWeatherForManyCities,
   SEARCH_CITIES_DEFAULT_PARAMS,
   searchCities,
 };

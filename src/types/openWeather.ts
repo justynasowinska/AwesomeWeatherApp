@@ -22,6 +22,11 @@ export interface OpenWeatherCityWeatherResponse {
   cod: number;
 }
 
+export type OpenWeatherGroupCityWeatherResponse = Pick<
+  OpenWeatherSearchCityResponse,
+  'count' | 'list'
+>;
+
 export interface WeatherCity {
   id: number;
   name: string;
