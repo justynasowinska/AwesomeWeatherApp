@@ -2,6 +2,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { FavoritesList } from 'components/FavoritesList';
 import { Search } from 'components/Search';
 import { useFavoritesContext } from 'context/FavoritesContext';
+import useGetWeatherForMany from 'hooks/useGetWeatherForMany';
 import useSearchCities, { MIN_QUERY_LENGTH } from 'hooks/useSearchCities';
 import debounce from 'lodash.debounce';
 import { RootStackParamList } from 'navigation/AppNavigator';
@@ -17,6 +18,12 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [inputValue, setInputValue] = useState('');
   const [query, setQuery] = useState('');
   const { data, status, error } = useSearchCities(query);
+
+  const cityIds = useMemo(() => {
+    return favorites.map(city => city.id);
+  }, [favorites]);
+
+  const { data: dataForFavorites } = useGetWeatherForMany(cityIds);
 
   const debouncedSetQuery = useMemo(
     () => debounce((text: string) => setQuery(text), 300),
@@ -55,7 +62,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         testID="search-view"
       />
       <FavoritesList
-        favorites={favorites}
+        favorites={dataForFavorites?.list}
         onRemove={removeFromFavorites}
         onCitySelect={handleCitySelect}
         testID="favorites-list"

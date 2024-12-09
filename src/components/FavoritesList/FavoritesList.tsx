@@ -1,11 +1,12 @@
 import React from 'react';
 import { FlatList, FlatListProps, StyleSheet, View } from 'react-native';
 import { Divider, Text } from 'react-native-paper';
-import { City } from 'types/openWeather';
+import { City, WeatherCity } from 'types/openWeather';
 import FavoriteCityItem from './FavoriteCityItem';
 
-interface FavoritesListProps extends Omit<FlatListProps<City>, 'renderItem' | 'data'> {
-  favorites: City[];
+interface FavoritesListProps
+  extends Omit<FlatListProps<WeatherCity>, 'renderItem' | 'data'> {
+  favorites?: WeatherCity[] | null;
   onRemove: (cityId: number) => void;
   onCitySelect: (city: City) => void;
 }
