@@ -17,7 +17,6 @@ const useFavorites = () => {
           setFavorites(JSON.parse(storedFavorites));
         }
       } catch (e) {
-        console.error('Failed to load favorites:', e);
         setError('Failed to load favorites');
       }
     };
@@ -32,7 +31,6 @@ const useFavorites = () => {
       await setItem(JSON.stringify(updatedFavorites));
       setFavorites(updatedFavorites);
     } catch (e) {
-      console.error('Failed to add favorite:', e);
       setError('Failed to add favorite');
     }
   };
@@ -43,7 +41,6 @@ const useFavorites = () => {
       await setItem(JSON.stringify(updatedFavorites));
       setFavorites(updatedFavorites);
     } catch (e) {
-      console.error('Failed to remove favorite:', e);
       setError('Failed to remove favorite');
     }
   };
@@ -53,15 +50,16 @@ const useFavorites = () => {
       await removeItem();
       setFavorites([]);
     } catch (e) {
-      console.error('Failed to clear favorites:', e);
       setError('Failed to clear favorites');
     }
   };
 
-  const clearError = () => setError(null);
+  const clearError = () => {
+    setError(null);
+  };
 
   return {
-    favorites: favorites || [],
+    favorites: favorites,
     addToFavorites,
     removeFromFavorites,
     clearAllFavorites,
