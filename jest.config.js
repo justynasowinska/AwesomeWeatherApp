@@ -9,6 +9,7 @@ module.exports = {
     '!src/types/*',
     '!src/**/*.d.ts',
     '!src/**/index.ts',
+    '!src/theme/**',
   ],
   coverageReporters: ['text'],
 };
