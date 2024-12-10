@@ -11,17 +11,9 @@ interface FavoritesContextValue {
   clearError: () => void;
 }
 
-const defaultContextValue: FavoritesContextValue = {
-  favorites: [],
-  error: null,
-  addToFavorites: () => {},
-  removeFromFavorites: () => {},
-  clearAllFavorites: () => {},
-  clearError: () => {},
-};
-
-const FavoritesContext =
-  createContext<FavoritesContextValue>(defaultContextValue);
+const FavoritesContext = createContext<FavoritesContextValue>(
+  null as unknown as FavoritesContextValue,
+);
 
 export const FavoritesProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children,
@@ -52,6 +44,7 @@ export const FavoritesProvider: React.FC<React.PropsWithChildren<{}>> = ({
 
 export const useFavoritesContext = (): FavoritesContextValue => {
   const context = useContext(FavoritesContext);
+
   if (!context) {
     throw new Error(
       'useFavoritesContext must be used within a FavoritesProvider',
