@@ -9,6 +9,10 @@ const mockedSearchCities = searchCities as jest.MockedFunction<
 >;
 
 describe('useSearchCities', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should fetch cities when query is provided', async () => {
     mockedSearchCities.mockResolvedValueOnce(searchCitiesMockResponse);
 
