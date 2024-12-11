@@ -14,6 +14,10 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('searchCities', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should fetch cities with the given query', async () => {
     mockedAxios.get.mockResolvedValueOnce({ data: searchCitiesMockResponse });
 
@@ -43,6 +47,10 @@ describe('searchCities', () => {
 });
 
 describe('getWeatherForCity', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should fetch weather data for a given city', async () => {
     mockedAxios.get.mockResolvedValueOnce({ data: getCityWeatherMockResponse });
     const { lat, lon } = getCityWeatherMockResponse.coord;
@@ -75,6 +83,10 @@ describe('getWeatherForCity', () => {
 });
 
 describe('getWeatherForManyCities', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should fetch weather data for multiple cities', async () => {
     mockedAxios.get.mockResolvedValueOnce({
       data: {
