@@ -41,6 +41,7 @@ describe('searchCities', () => {
   });
 
   it('should throw an error on failed API call', async () => {
+    expect.assertions(1);
     mockedAxios.get.mockRejectedValueOnce(new Error('API Error'));
     await expect(searchCities('London')).rejects.toThrow('API Error');
   });
@@ -74,6 +75,7 @@ describe('getWeatherForCity', () => {
   });
 
   it('should throw an error on failed API call', async () => {
+    expect.assertions(1);
     mockedAxios.get.mockRejectedValueOnce(new Error('API Error'));
 
     await expect(getWeatherForCity({ lat: 0, lon: 0 })).rejects.toThrow(
@@ -114,6 +116,7 @@ describe('getWeatherForManyCities', () => {
   });
 
   it('should throw an error on failed API call', async () => {
+    expect.assertions(1);
     mockedAxios.get.mockRejectedValueOnce(new Error('API Error'));
 
     await expect(getWeatherForManyCities([1, 2, 3])).rejects.toThrow(
