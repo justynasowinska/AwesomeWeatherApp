@@ -46,10 +46,63 @@ describe('HomeScreen', () => {
   };
 
   beforeEach(() => {
+    jest.useFakeTimers();
     jest.clearAllMocks();
 
+    mockedUseGetWeatherForMany.mockReturnValue({
+      data: null,
+      status: 'idle',
+      error: null,
+    });
+    mockedUseSearchCities.mockReturnValue({
+      data: [],
+      status: 'idle',
+      error: null,
+    });
     mockedUseFavoritesContext.mockReturnValue({
+      favorites: [],
+      removeFromFavorites: jest.fn(),
+      addToFavorites: jest.fn(),
+      clearAllFavorites: jest.fn(),
+      clearError: jest.fn(),
+      error: null,
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders the search and favorites list components', () => {
+    mockedUseFavoritesContext.mockReturnValueOnce({
       favorites: [mockFavoriteCity],
+      removeFromFavorites: jest.fn(),
+      addToFavorites: jest.fn(),
+      clearAllFavorites: jest.fn(),
+      clearError: jest.fn(),
+      error: null,
+    });
+
+    mockedUseSearchCities.mockReturnValueOnce({
+      data: [],
+      status: 'success',
+      error: null,
+    });
+
+    mockedUseGetWeatherForMany.mockReturnValueOnce({
+      data: weatherData,
+      status: 'success',
+      error: null,
+    });
+
+    render(<HomeScreen navigation={mockNavigation} />);
+    expect(screen.getByTestId('search-view')).toBeOnTheScreen();
+    expect(screen.getByTestId('favorites-list')).toBeOnTheScreen();
+  });
+
+  it('updates query on input change and shows results when length >= MIN_QUERY_LENGTH', async () => {
+    mockedUseFavoritesContext.mockReturnValue({
+      favorites: [],
       removeFromFavorites: jest.fn(),
       addToFavorites: jest.fn(),
       clearAllFavorites: jest.fn(),
@@ -68,15 +121,7 @@ describe('HomeScreen', () => {
       status: 'success',
       error: null,
     });
-  });
 
-  it('renders the search and favorites list components', () => {
-    render(<HomeScreen navigation={mockNavigation} />);
-    expect(screen.getByTestId('search-view')).toBeOnTheScreen();
-    expect(screen.getByTestId('favorites-list')).toBeOnTheScreen();
-  });
-
-  it('updates query on input change and shows results when length >= MIN_QUERY_LENGTH', async () => {
     render(<HomeScreen navigation={mockNavigation} />);
     const input = screen.getByPlaceholderText('Search for a city');
 
@@ -90,6 +135,12 @@ describe('HomeScreen', () => {
   });
 
   it('navigates to Details screen when a city is selected from search results', async () => {
+    mockedUseSearchCities.mockReturnValue({
+      data: [mockSearchCity],
+      status: 'success',
+      error: null,
+    });
+
     render(<HomeScreen navigation={mockNavigation} />);
 
     const input = screen.getByPlaceholderText('Search for a city');
@@ -110,6 +161,12 @@ describe('HomeScreen', () => {
   });
 
   it('displays weather data for favorite cities', () => {
+    mockedUseGetWeatherForMany.mockReturnValueOnce({
+      data: weatherData,
+      status: 'success',
+      error: null,
+    });
+
     render(<HomeScreen navigation={mockNavigation} />);
     const tempText = screen.getByText('0°C');
 
