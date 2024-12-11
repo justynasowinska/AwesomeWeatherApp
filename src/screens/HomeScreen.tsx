@@ -23,7 +23,11 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     return favorites.map(city => city.id);
   }, [favorites]);
 
-  const { data: dataForFavorites } = useGetWeatherForMany(cityIds);
+  const {
+    data: dataForFavorites,
+    error: errorFavorites,
+    status: statusFavorites,
+  } = useGetWeatherForMany(cityIds);
 
   const debouncedSetQuery = useMemo(
     () => debounce((text: string) => setQuery(text), 300),
@@ -66,8 +70,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         onRemove={removeFromFavorites}
         onCitySelect={handleCitySelect}
         testID="favorites-list"
-        isLoading={status === Status.FETCHING}
-        error={status === Status.ERROR ? error : null}
+        isLoading={statusFavorites === Status.FETCHING}
+        error={errorFavorites === Status.ERROR ? errorFavorites : null}
       />
     </>
   );
