@@ -46,9 +46,6 @@ describe('HomeScreen', () => {
   };
 
   beforeEach(() => {
-    jest.useFakeTimers();
-    jest.clearAllMocks();
-
     mockedUseGetWeatherForMany.mockReturnValue({
       data: null,
       status: 'idle',
