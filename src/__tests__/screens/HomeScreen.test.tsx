@@ -1,9 +1,7 @@
-import { NavigationProp } from '@react-navigation/native';
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { useFavoritesContext } from 'context/FavoritesContext';
 import useGetWeatherForMany from 'hooks/useGetWeatherForMany';
 import useSearchCities from 'hooks/useSearchCities';
-import { RootStackParamList } from 'navigation/AppNavigator';
 import React from 'react';
 import HomeScreen from 'screens/HomeScreen';
 
@@ -16,9 +14,18 @@ const mockedUseSearchCities = useSearchCities as jest.Mock;
 jest.mock('hooks/useGetWeatherForMany');
 const mockedUseGetWeatherForMany = useGetWeatherForMany as jest.Mock;
 
-const mockNavigation = {
-  navigate: jest.fn(),
-} as unknown as NavigationProp<RootStackParamList, 'Home'>;
+jest.mock('@react-navigation/native', () => {
+  const actualNav = jest.requireActual('@react-navigation/native');
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+      dispatch: jest.fn(),
+    }),
+  };
+});
+
+const mockNavigation = require('@react-navigation/native').useNavigation();
 
 describe('HomeScreen', () => {
   const mockFavoriteCity = {
@@ -92,7 +99,7 @@ describe('HomeScreen', () => {
       error: null,
     });
 
-    render(<HomeScreen navigation={mockNavigation} />);
+    render(<HomeScreen />);
     expect(screen.getByTestId('search-view')).toBeOnTheScreen();
     expect(screen.getByTestId('favorites-list')).toBeOnTheScreen();
   });
@@ -119,7 +126,7 @@ describe('HomeScreen', () => {
       error: null,
     });
 
-    render(<HomeScreen navigation={mockNavigation} />);
+    render(<HomeScreen />);
     const input = screen.getByPlaceholderText('Search for a city');
 
     // eslint-disable-next-line testing-library/no-unnecessary-act
@@ -132,25 +139,30 @@ describe('HomeScreen', () => {
   });
 
   it('navigates to Details screen when a city is selected from search results', async () => {
+    mockedUseFavoritesContext.mockReturnValue({
+      favorites: [],
+      removeFromFavorites: jest.fn(),
+      addToFavorites: jest.fn(),
+      clearAllFavorites: jest.fn(),
+      clearError: jest.fn(),
+      error: null,
+    });
+
     mockedUseSearchCities.mockReturnValue({
       data: [mockSearchCity],
       status: 'success',
       error: null,
     });
 
-    render(<HomeScreen navigation={mockNavigation} />);
-
-    const input = screen.getByPlaceholderText('Search for a city');
-
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      fireEvent.changeText(input, 'Test');
-      jest.runAllTimers();
+    mockedUseGetWeatherForMany.mockReturnValue({
+      data: weatherData,
+      status: 'success',
+      error: null,
     });
 
-    const cityItem = await screen.findByText('Test City 2, US');
-
-    fireEvent.press(cityItem);
+    render(<HomeScreen />);
+    const city = await screen.findByText('Test City 2, US');
+    fireEvent.press(city);
 
     expect(mockNavigation.navigate).toHaveBeenCalledWith('Details', {
       city: mockSearchCity,
@@ -164,14 +176,14 @@ describe('HomeScreen', () => {
       error: null,
     });
 
-    render(<HomeScreen navigation={mockNavigation} />);
+    render(<HomeScreen />);
     const tempText = screen.getByText('0°C');
 
     expect(tempText).toBeOnTheScreen();
   });
 
   it('handles search input clear', async () => {
-    render(<HomeScreen navigation={mockNavigation} />);
+    render(<HomeScreen />);
     const input = screen.getByPlaceholderText('Search for a city');
     fireEvent.changeText(input, 'Test');
     const clearButton = screen.getByTestId('icon-right-close');
