@@ -16,18 +16,14 @@ const AppNavigator = () => {
   const { colors } = useTheme();
 
   return (
-    <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{ headerTransparent: true, title: '' }}>
+      <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen
         name="Details"
         component={DetailsScreen}
         options={{
-          headerTransparent: true,
-          headerTitle: '',
           headerTintColor: colors.primary,
         }}
       />

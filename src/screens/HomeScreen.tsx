@@ -1,4 +1,5 @@
-import { NavigationProp } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import Screen from 'components/common/Screen';
 import { FavoritesList } from 'components/FavoritesList';
 import { Search } from 'components/Search';
 import { useFavoritesContext } from 'context/FavoritesContext';
@@ -9,15 +10,14 @@ import { RootStackParamList } from 'navigation/AppNavigator';
 import React, { useCallback, useMemo, useState } from 'react';
 import { City } from 'types/openWeather';
 
-interface HomeScreenProps {
-  navigation: NavigationProp<RootStackParamList, 'Home'>;
-}
-
-const HomeScreen = ({ navigation }: HomeScreenProps) => {
+const HomeScreen = () => {
   const { favorites, removeFromFavorites } = useFavoritesContext();
   const [inputValue, setInputValue] = useState('');
   const [query, setQuery] = useState('');
   const { data, status, error } = useSearchCities(query);
+
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, 'Home'>>();
 
   const cityIds = useMemo(() => {
     return favorites.map(city => city.id);
@@ -53,7 +53,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   };
 
   return (
-    <>
+    <Screen>
       <Search
         inputValue={inputValue}
         data={data}
@@ -73,7 +73,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         isLoading={statusFavorites === Status.FETCHING}
         error={errorFavorites === Status.ERROR ? errorFavorites : null}
       />
-    </>
+    </Screen>
   );
 };
 

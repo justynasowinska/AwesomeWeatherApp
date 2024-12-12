@@ -1,5 +1,6 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { FavoritesIcon } from 'components/common/FavoritesIcon';
+import Screen from 'components/common/Screen';
 import { ErrorBanner } from 'components/ErrorBanner';
 import { useFavoritesContext } from 'context/FavoritesContext';
 import useGetWeatherForCity, { Status } from 'hooks/useGetWeatherForCity';
@@ -87,28 +88,30 @@ const DetailsScreen = () => {
   }, [data, status, error, colors.error]);
 
   return (
-    <View style={styles.container}>
-      <ErrorBanner
-        visible={Boolean(favoritesError)}
-        error={favoritesError}
-        onClosePress={clearError}
-      />
-      <View style={styles.header}>
-        <Text style={styles.cityName}>{city.name}</Text>
-        <FavoritesIcon
-          isFavorite={isFavoriteCity}
-          onPress={handleToggleFavorite}
-          style={styles.favoriteButton}
-          size={34}
-          accessibilityLabel={
-            isFavoriteCity
-              ? `Remove ${city.name} from favorites`
-              : `Add ${city.name} to favorites`
-          }
+    <Screen>
+      <View style={styles.container}>
+        <ErrorBanner
+          visible={Boolean(favoritesError)}
+          error={favoritesError}
+          onClosePress={clearError}
         />
+        <View style={styles.header}>
+          <Text style={styles.cityName}>{city.name}</Text>
+          <FavoritesIcon
+            isFavorite={isFavoriteCity}
+            onPress={handleToggleFavorite}
+            style={styles.favoriteButton}
+            size={34}
+            accessibilityLabel={
+              isFavoriteCity
+                ? `Remove ${city.name} from favorites`
+                : `Add ${city.name} to favorites`
+            }
+          />
+        </View>
+        {renderContent()}
       </View>
-      {renderContent()}
-    </View>
+    </Screen>
   );
 };
 
