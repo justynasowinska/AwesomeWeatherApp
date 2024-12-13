@@ -5,7 +5,6 @@ import debounce from 'lodash.debounce';
 
 import { RootStackParamList } from 'navigation/AppNavigator';
 
-
 import {
   MIN_QUERY_LENGTH,
   useCitiesQuery,

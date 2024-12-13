@@ -3,7 +3,7 @@ import { useTheme } from 'react-native-paper';
 
 import { City } from 'types/openWeather';
 
-import DetailsScreen from '../screens/DetailsScreen';
+import DetailsScreen from '../screens/Details/Details';
 import HomeScreen from '../screens/HomeScreen';
 
 export type RootStackParamList = {
