@@ -1,9 +1,9 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { useWeatherForCityQuery } from 'api/queries';
 import { FavoritesIcon } from 'components/common/FavoritesIcon';
 import Screen from 'components/common/Screen';
 import { ErrorBanner } from 'components/ErrorBanner';
 import { useFavoritesContext } from 'context/FavoritesContext';
-import useGetWeatherForCity, { Status } from 'hooks/useGetWeatherForCity';
 import { RootStackParamList } from 'navigation/AppNavigator';
 import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -31,10 +31,10 @@ const DetailsScreen = () => {
     [city, favorites],
   );
 
-  const { data, status, error } = useGetWeatherForCity(
-    city.coord.lat,
-    city.coord.lon,
-  );
+  const { data, isLoading, error } = useWeatherForCityQuery({
+    lat: city.coord.lat,
+    lon: city.coord.lon,
+  });
 
   const handleToggleFavorite = () => {
     if (isFavoriteCity) {
@@ -50,7 +50,7 @@ const DetailsScreen = () => {
   };
 
   const renderContent = useCallback(() => {
-    if (status === Status.FETCHING) {
+    if (isLoading) {
       return (
         <ActivityIndicator
           size="large"
@@ -59,8 +59,8 @@ const DetailsScreen = () => {
       );
     }
 
-    if (status === Status.ERROR || !data) {
-      const errorMessage = error || 'Failed to load weather data.';
+    if (error) {
+      const errorMessage = error.message || 'Failed to load weather data.';
       return (
         <Text style={[styles.error, { color: colors.error }]}>
           {errorMessage}
@@ -68,24 +68,28 @@ const DetailsScreen = () => {
       );
     }
 
+    if (!data) {
+      return null;
+    }
+
     return (
       <>
         <Avatar.Image
           source={{
-            uri: getWeatherIconUrl(data.weather[0]?.icon),
+            uri: getWeatherIconUrl(data?.weather[0]?.icon),
           }}
           size={100}
           style={styles.weatherIcon}
         />
         <Text style={styles.temperature}>
-          {kelvinToCelsius(data.main.temp)}°C
+          {kelvinToCelsius(data?.main.temp)}°C
         </Text>
         <Text style={styles.description}>
-          {createWeatherDescription(data.weather)}
+          {createWeatherDescription(data?.weather)}
         </Text>
       </>
     );
-  }, [data, status, error, colors.error]);
+  }, [colors.error, data, error, isLoading]);
 
   return (
     <Screen>

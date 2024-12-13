@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import useCitiesQuery from 'api/queries';
+import { useCitiesQuery } from 'api/queries';
 import Screen from 'components/common/Screen';
 import { FavoritesList } from 'components/FavoritesList';
 import { Search } from 'components/Search';
