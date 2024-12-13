@@ -1,10 +1,13 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { useCitiesQuery, useGetWeatherForManyQuery } from 'api/queries';
+import {
+  MIN_QUERY_LENGTH,
+  useCitiesQuery,
+  useGetWeatherForManyQuery,
+} from 'api/queries';
 import Screen from 'components/common/Screen';
 import { FavoritesList } from 'components/FavoritesList';
 import { Search } from 'components/Search';
 import { useFavoritesContext } from 'context/FavoritesContext';
-import { MIN_QUERY_LENGTH } from 'hooks/useSearchCities';
 import debounce from 'lodash.debounce';
 import { RootStackParamList } from 'navigation/AppNavigator';
 import React, { useCallback, useMemo, useState } from 'react';
