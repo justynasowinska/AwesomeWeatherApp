@@ -4,7 +4,6 @@ import { SearchInput, SearchResults } from 'components/Search';
 
 import { City, WeatherCity } from 'types/openWeather';
 
-
 interface SearchProps extends ViewProps {
   inputValue: string;
   data: WeatherCity[];
@@ -39,7 +38,6 @@ const Search = ({
         {showResults && (
           <SearchResults
             data={data}
-            isLoading={isLoading}
             error={error}
             onCitySelect={onCitySelect}
           />
