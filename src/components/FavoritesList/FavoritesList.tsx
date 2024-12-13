@@ -8,7 +8,7 @@ interface FavoritesListProps
   extends Omit<FlatListProps<WeatherCity>, 'renderItem' | 'data'> {
   favorites?: WeatherCity[] | null;
   isLoading: boolean;
-  error: string | null;
+  error: Error | null;
   onRemove: (cityId: number) => void;
   onCitySelect: (city: City) => void;
 }
@@ -44,7 +44,7 @@ const FavoritesList = ({
     return (
       <View style={styles.emptyMessage}>
         <Text style={{ color: colors.error }} variant="titleLarge">
-          {error}
+          {error.message || 'Failed to load your favorites.'}
         </Text>
       </View>
     );

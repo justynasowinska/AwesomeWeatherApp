@@ -1,10 +1,9 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { useCitiesQuery } from 'api/queries';
+import { useCitiesQuery, useGetWeatherForManyQuery } from 'api/queries';
 import Screen from 'components/common/Screen';
 import { FavoritesList } from 'components/FavoritesList';
 import { Search } from 'components/Search';
 import { useFavoritesContext } from 'context/FavoritesContext';
-import useGetWeatherForMany, { Status } from 'hooks/useGetWeatherForMany';
 import { MIN_QUERY_LENGTH } from 'hooks/useSearchCities';
 import debounce from 'lodash.debounce';
 import { RootStackParamList } from 'navigation/AppNavigator';
@@ -25,10 +24,10 @@ const HomeScreen = () => {
   }, [favorites]);
 
   const {
-    data: dataForFavorites,
-    error: errorFavorites,
-    status: statusFavorites,
-  } = useGetWeatherForMany(cityIds);
+    data: dataFavoritesWeather,
+    error: errorFavoritesWeathers,
+    isLoading: loadingFavoritesWeathers,
+  } = useGetWeatherForManyQuery(cityIds);
 
   const debouncedSetQuery = useMemo(
     () => debounce((text: string) => setQuery(text), 300),
@@ -67,12 +66,12 @@ const HomeScreen = () => {
         testID="search-view"
       />
       <FavoritesList
-        favorites={dataForFavorites?.list}
+        favorites={dataFavoritesWeather?.list}
         onRemove={removeFromFavorites}
         onCitySelect={handleCitySelect}
         testID="favorites-list"
-        isLoading={statusFavorites === Status.FETCHING}
-        error={errorFavorites === Status.ERROR ? errorFavorites : null}
+        isLoading={loadingFavoritesWeathers}
+        error={errorFavoritesWeathers}
       />
     </Screen>
   );

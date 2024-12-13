@@ -1,5 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { getWeatherForCity, searchCities } from 'api/openWeather';
+import {
+  getWeatherForCity,
+  getWeatherForManyCities,
+  searchCities,
+} from 'api/openWeather';
 
 /**
  * OpenWeather API requires a minimum of 3 characters in the query to return results.
@@ -27,4 +31,16 @@ const useWeatherForCityQuery = ({ lat, lon }: WeatherForCityParams) => {
   });
 };
 
-export { MIN_QUERY_LENGTH, useCitiesQuery, useWeatherForCityQuery };
+const useGetWeatherForManyQuery = (cityIds: number[]) => {
+  return useQuery({
+    queryKey: ['cities-weather', cityIds],
+    queryFn: () => getWeatherForManyCities(cityIds),
+  });
+};
+
+export {
+  MIN_QUERY_LENGTH,
+  useCitiesQuery,
+  useGetWeatherForManyQuery,
+  useWeatherForCityQuery,
+};
