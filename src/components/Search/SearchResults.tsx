@@ -1,8 +1,10 @@
+import { FlatList, StyleSheet, View } from 'react-native';
+
+import { Divider, Text, useTheme } from 'react-native-paper';
+
 import { SearchResultsItem } from 'components/Search';
 import { State as SearchState } from 'hooks/useSearchCities';
-import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
-import { Divider, Text, useTheme } from 'react-native-paper';
+
 import { WeatherCity } from 'types/openWeather';
 
 interface SearchResultsDropdownProps {

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
+
 import { ErrorBanner } from 'components/ErrorBanner';
-import React from 'react';
 
 describe('ErrorBanner', () => {
   beforeEach(() => {

@@ -1,13 +1,16 @@
+import { useCallback, useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
+
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { ActivityIndicator, Avatar, Text, useTheme } from 'react-native-paper';
+
+import { RootStackParamList } from 'navigation/AppNavigator';
+
 import { useWeatherForCityQuery } from 'api/queries';
 import { FavoritesIcon } from 'components/common/FavoritesIcon';
 import Screen from 'components/common/Screen';
 import { ErrorBanner } from 'components/ErrorBanner';
 import { useFavoritesContext } from 'context/FavoritesContext';
-import { RootStackParamList } from 'navigation/AppNavigator';
-import React, { useCallback, useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { ActivityIndicator, Avatar, Text, useTheme } from 'react-native-paper';
 import {
   createWeatherDescription,
   getWeatherIconUrl,

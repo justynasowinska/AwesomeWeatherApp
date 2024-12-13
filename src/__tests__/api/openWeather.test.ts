@@ -1,5 +1,8 @@
+import axios from 'axios';
+
 import { getCityWeatherMockResponse } from '__mocks__/getCityWeatherMockResponse';
 import { searchCitiesMockResponse } from '__mocks__/searchCitiesMockResponse';
+
 import {
   API_ENDPOINTS,
   BASE_URL,
@@ -8,7 +11,6 @@ import {
   SEARCH_CITIES_DEFAULT_PARAMS,
   searchCities,
 } from 'api/openWeather';
-import axios from 'axios';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;

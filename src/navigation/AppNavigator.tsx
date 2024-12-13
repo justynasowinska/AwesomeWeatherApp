@@ -1,7 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
 import { useTheme } from 'react-native-paper';
+
 import { City } from 'types/openWeather';
+
 import DetailsScreen from '../screens/DetailsScreen';
 import HomeScreen from '../screens/HomeScreen';
 

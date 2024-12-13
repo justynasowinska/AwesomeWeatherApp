@@ -1,6 +1,7 @@
-import React from 'react';
 import { StyleSheet, View } from 'react-native';
+
 import { Avatar, Text } from 'react-native-paper';
+
 import { getWeatherIconUrl, kelvinToCelsius } from 'utils/openWeatherHelpers';
 
 interface FavoriteCityItemRightProps {

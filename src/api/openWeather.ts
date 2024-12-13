@@ -1,5 +1,7 @@
-import { OPEN_WEATHER_API_KEY } from '@env';
 import axios from 'axios';
+
+import { OPEN_WEATHER_API_KEY } from '@env';
+
 import {
   Coordinates,
   OpenWeatherCityWeatherResponse,

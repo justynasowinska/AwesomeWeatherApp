@@ -1,7 +1,7 @@
 import { useNetInfo } from '@react-native-community/netinfo';
 import { render, screen } from '@testing-library/react-native';
+
 import { OfflineBanner } from 'components/OfflineBanner';
-import React from 'react';
 
 const mockedUseNetInfo = useNetInfo as jest.Mock;
 

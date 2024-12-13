@@ -1,7 +1,9 @@
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { renderHook } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react-native';
+
 import useFavorites from 'hooks/useFavorites';
+
 import { City } from 'types/openWeather';
 
 jest.mock('context/FavoritesContext');

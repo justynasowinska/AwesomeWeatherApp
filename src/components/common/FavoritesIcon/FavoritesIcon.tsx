@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconButton, IconButtonProps, useTheme } from 'react-native-paper';
 
 interface FavoritesIconProps extends Omit<IconButtonProps, 'icon'> {

@@ -1,5 +1,7 @@
+import { createContext, useContext } from 'react';
+
 import useFavorites from 'hooks/useFavorites';
-import React, { createContext, useContext } from 'react';
+
 import { City } from 'types/openWeather';
 
 interface FavoritesContextValue {

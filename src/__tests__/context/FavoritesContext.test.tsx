@@ -1,12 +1,15 @@
+import { Text } from 'react-native';
+
 import { render, screen } from '@testing-library/react-native';
+
 import {
   FavoritesProvider,
   useFavoritesContext,
 } from 'context/FavoritesContext';
 import useFavorites from 'hooks/useFavorites';
-import React from 'react';
-import { Text } from 'react-native';
+
 import { City } from 'types/openWeather';
+
 
 jest.mock('hooks/useFavorites');
 

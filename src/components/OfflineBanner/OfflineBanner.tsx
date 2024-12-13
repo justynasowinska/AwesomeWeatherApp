@@ -1,6 +1,6 @@
-import { useNetInfo } from '@react-native-community/netinfo';
-import React from 'react';
 import { StyleSheet, View } from 'react-native';
+
+import { useNetInfo } from '@react-native-community/netinfo';
 import { Icon, Text, useTheme } from 'react-native-paper';
 
 const OfflineBanner = () => {

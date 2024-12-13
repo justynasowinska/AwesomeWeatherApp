@@ -1,5 +1,7 @@
-import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
+
+import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+
 import { City } from 'types/openWeather';
 
 const FAVORITES_KEY = 'favorites';

@@ -1,7 +1,9 @@
-import React from 'react';
 import { FlatList, FlatListProps, StyleSheet } from 'react-native';
+
 import { Divider } from 'react-native-paper';
+
 import { City, WeatherCity } from 'types/openWeather';
+
 import FavoriteCityItem from './FavoriteCityItem';
 import FavoriteListEmpty from './FavoriteListEmpty';
 import FavoriteListError from './FavoriteListError';

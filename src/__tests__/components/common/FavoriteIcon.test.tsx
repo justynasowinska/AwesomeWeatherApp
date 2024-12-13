@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react-native';
-import { FavoritesIcon } from 'components/common/FavoritesIcon';
-import React from 'react';
 import { IconButton } from 'react-native-paper';
+
+import { FavoritesIcon } from 'components/common/FavoritesIcon';
 
 describe('FavoritesIcon', () => {
   it('should display the "heart-outline" icon when isFavorite is false', () => {

@@ -1,4 +1,11 @@
+import { useCallback, useMemo, useState } from 'react';
+
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import debounce from 'lodash.debounce';
+
+import { RootStackParamList } from 'navigation/AppNavigator';
+
+
 import {
   MIN_QUERY_LENGTH,
   useCitiesQuery,
@@ -8,9 +15,7 @@ import Screen from 'components/common/Screen';
 import { FavoritesList } from 'components/FavoritesList';
 import { Search } from 'components/Search';
 import { useFavoritesContext } from 'context/FavoritesContext';
-import debounce from 'lodash.debounce';
-import { RootStackParamList } from 'navigation/AppNavigator';
-import React, { useCallback, useMemo, useState } from 'react';
+
 import { City } from 'types/openWeather';
 
 const HomeScreen = () => {

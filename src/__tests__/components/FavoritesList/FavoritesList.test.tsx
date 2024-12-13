@@ -1,7 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
+
 import { FavoritesList } from 'components/FavoritesList';
-import React from 'react';
+
 import { WeatherCity } from 'types/openWeather';
+
 
 const mockFavorites: WeatherCity[] = [
   {

@@ -1,11 +1,13 @@
 import { useRoute } from '@react-navigation/native';
 import { fireEvent, render, screen } from '@testing-library/react-native';
+import { IconButton } from 'react-native-paper';
+
 import { useFavoritesContext } from 'context/FavoritesContext';
 import useGetWeatherForCity, { Status } from 'hooks/useGetWeatherForCity';
-import React from 'react';
-import { IconButton } from 'react-native-paper';
 import DetailsScreen from 'screens/DetailsScreen';
+
 import { City } from 'types/openWeather';
+
 
 jest.mock('@react-navigation/native', () => ({
   useRoute: jest.fn(),
