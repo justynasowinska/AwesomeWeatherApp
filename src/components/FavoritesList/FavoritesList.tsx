@@ -1,8 +1,11 @@
 import React from 'react';
-import { FlatList, FlatListProps, StyleSheet, View } from 'react-native';
-import { ActivityIndicator, Divider, Text, useTheme } from 'react-native-paper';
+import { FlatList, FlatListProps, StyleSheet } from 'react-native';
+import { Divider } from 'react-native-paper';
 import { City, WeatherCity } from 'types/openWeather';
 import FavoriteCityItem from './FavoriteCityItem';
+import FavoriteListEmpty from './FavoriteListEmpty';
+import FavoriteListError from './FavoriteListError';
+import FavoriteListLoading from './FavoriteListLoading';
 
 interface FavoritesListProps
   extends Omit<FlatListProps<WeatherCity>, 'renderItem' | 'data'> {
@@ -21,33 +24,12 @@ const FavoritesList = ({
   onCitySelect,
   ...props
 }: FavoritesListProps) => {
-  const { colors } = useTheme();
-
-  const renderListEmptyComponent = () => (
-    <View style={styles.emptyMessage}>
-      <Text variant="titleLarge">No favorite cities yet.</Text>
-    </View>
-  );
-
-  if (isLoading) {
-    return (
-      <View style={styles.emptyMessage}>
-        <Text style={styles.loadingMessage} variant="titleLarge">
-          Loading Your Favorites...
-        </Text>
-        <ActivityIndicator size="large" />
-      </View>
-    );
+  if (isLoading && !favorites) {
+    return <FavoriteListLoading />;
   }
 
   if (error) {
-    return (
-      <View style={styles.emptyMessage}>
-        <Text style={{ color: colors.error }} variant="titleLarge">
-          {error.message || 'Failed to load your favorites.'}
-        </Text>
-      </View>
-    );
+    return <FavoriteListError error={error} />;
   }
 
   return (
@@ -62,7 +44,7 @@ const FavoritesList = ({
         />
       )}
       ItemSeparatorComponent={Divider}
-      ListEmptyComponent={renderListEmptyComponent}
+      ListEmptyComponent={<FavoriteListEmpty />}
       keyboardShouldPersistTaps="handled"
       style={styles.list}
       {...props}
@@ -74,17 +56,6 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     padding: 16,
-  },
-  title: {
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  emptyMessage: {
-    padding: 16,
-    alignItems: 'center',
-  },
-  loadingMessage: {
-    marginBottom: 16,
   },
 });
 
