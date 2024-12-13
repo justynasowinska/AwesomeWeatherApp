@@ -1,10 +1,11 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import useCitiesQuery from 'api/queries';
 import Screen from 'components/common/Screen';
 import { FavoritesList } from 'components/FavoritesList';
 import { Search } from 'components/Search';
 import { useFavoritesContext } from 'context/FavoritesContext';
 import useGetWeatherForMany, { Status } from 'hooks/useGetWeatherForMany';
-import useSearchCities, { MIN_QUERY_LENGTH } from 'hooks/useSearchCities';
+import { MIN_QUERY_LENGTH } from 'hooks/useSearchCities';
 import debounce from 'lodash.debounce';
 import { RootStackParamList } from 'navigation/AppNavigator';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -14,7 +15,7 @@ const HomeScreen = () => {
   const { favorites, removeFromFavorites } = useFavoritesContext();
   const [inputValue, setInputValue] = useState('');
   const [query, setQuery] = useState('');
-  const { data, status, error } = useSearchCities(query);
+  const { data, isLoading, error } = useCitiesQuery(query);
 
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, 'Home'>>();
@@ -56,8 +57,8 @@ const HomeScreen = () => {
     <Screen>
       <Search
         inputValue={inputValue}
-        data={data}
-        status={status}
+        data={data?.list || []}
+        isLoading={isLoading}
         error={error}
         showResults={query.length >= MIN_QUERY_LENGTH}
         onInputChange={handleInputChange}

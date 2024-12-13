@@ -1,5 +1,5 @@
 import { SearchResultsItem } from 'components/Search';
-import { State as SearchState, Status } from 'hooks/useSearchCities';
+import { State as SearchState } from 'hooks/useSearchCities';
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Divider, Text, useTheme } from 'react-native-paper';
@@ -7,33 +7,33 @@ import { WeatherCity } from 'types/openWeather';
 
 interface SearchResultsDropdownProps {
   data: SearchState['data'];
-  status: SearchState['status'];
-  error: SearchState['error'];
+  isLoading: boolean;
+  error: Error | null;
   onCitySelect: (city: WeatherCity) => void;
 }
 
 const SearchResultsDropdown = ({
   data,
-  status,
+  isLoading,
   error,
   onCitySelect,
 }: SearchResultsDropdownProps) => {
   const { colors } = useTheme();
 
   const renderContent = () => {
-    if (status === Status.FETCHING) {
+    if (isLoading) {
       return <Text style={styles.message}>Loading...</Text>;
     }
 
-    if (status === Status.ERROR && error) {
+    if (error) {
       return (
         <Text style={[styles.message, { color: colors.error }]}>
-          Error: {error}
+          Error: {error.message || 'An error occurred'}
         </Text>
       );
     }
 
-    if (status === Status.SUCCESS && data.length === 0) {
+    if (data.length === 0) {
       return (
         <Text style={styles.message}>
           No results yet. Keep typing or try something different.

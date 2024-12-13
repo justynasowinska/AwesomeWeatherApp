@@ -1,4 +1,5 @@
 import { NavigationContainer, Theme } from '@react-navigation/native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import OfflineBanner from 'components/OfflineBanner/OfflineBanner';
 import { FavoritesProvider } from 'context/FavoritesContext';
 import React from 'react';
@@ -14,6 +15,8 @@ import {
 } from 'theme/paperTheme';
 import AppNavigator from './src/navigation/AppNavigator';
 
+export const queryClient = new QueryClient();
+
 const App = () => {
   const colorScheme = useColorScheme();
 
@@ -22,18 +25,20 @@ const App = () => {
   const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
 
   return (
-    <PaperProvider theme={theme}>
-      <SafeAreaProvider>
-        <NavigationContainer
-          onReady={() => BootSplash.hide()}
-          theme={navigationTheme}>
-          <FavoritesProvider>
-            <OfflineBanner />
-            <AppNavigator />
-          </FavoritesProvider>
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </PaperProvider>
+    <QueryClientProvider client={queryClient}>
+      <PaperProvider theme={theme}>
+        <SafeAreaProvider>
+          <NavigationContainer
+            onReady={() => BootSplash.hide()}
+            theme={navigationTheme}>
+            <FavoritesProvider>
+              <OfflineBanner />
+              <AppNavigator />
+            </FavoritesProvider>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </PaperProvider>
+    </QueryClientProvider>
   );
 };
 
