@@ -1,10 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-
 import { searchCitiesMockResponse } from '__mocks__/searchCitiesMockResponse';
 
-import Search from 'components/Search/Search';
 import { Status } from 'hooks/useSearchCities';
+import { Search } from 'screens/Home/components/Search';
 
 describe('Search', () => {
   const defaultProps = {

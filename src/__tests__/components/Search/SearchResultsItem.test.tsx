@@ -1,9 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-import { SearchResultsItem } from 'components/Search';
+import { SearchResultsItem } from 'screens/Home/components/Search';
 
 import { WeatherCity } from 'types/openWeather';
-
 
 const mockCity: WeatherCity = {
   id: 1,

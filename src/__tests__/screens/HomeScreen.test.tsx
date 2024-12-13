@@ -3,8 +3,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { useFavoritesContext } from 'context/FavoritesContext';
 import useGetWeatherForMany from 'hooks/useGetWeatherForMany';
 import useSearchCities from 'hooks/useSearchCities';
-import HomeScreen from 'screens/HomeScreen';
-
+import HomeScreen from 'screens/Home/Home';
 
 jest.mock('context/FavoritesContext');
 const mockedUseFavoritesContext = useFavoritesContext as jest.Mock;

@@ -10,12 +10,13 @@ import {
   useCitiesQuery,
   useGetWeatherForManyQuery,
 } from 'api/queries';
-import Screen from 'components/common/Screen';
-import { FavoritesList } from 'components/FavoritesList';
-import { Search } from 'components/Search';
+import Screen from 'components/Screen';
 import { useFavoritesContext } from 'context/FavoritesContext';
 
 import { City } from 'types/openWeather';
+
+import { FavoritesList } from './components/FavoritesList';
+import { Search } from './components/Search';
 
 const HomeScreen = () => {
   const { favorites, removeFromFavorites } = useFavoritesContext();

@@ -4,7 +4,7 @@ import { useTheme } from 'react-native-paper';
 import { City } from 'types/openWeather';
 
 import DetailsScreen from '../screens/Details/Details';
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen from '../screens/Home/Home';
 
 export type RootStackParamList = {
   Home: undefined;

@@ -2,9 +2,8 @@ import { render, screen } from '@testing-library/react-native';
 
 import { searchCitiesMockResponse } from '__mocks__/searchCitiesMockResponse';
 
-import { SearchResults } from 'components/Search';
 import { Status } from 'hooks/useSearchCities';
-
+import { SearchResults } from 'screens/Home/components/Search';
 
 describe('SearchResults', () => {
   it('renders loading state', () => {

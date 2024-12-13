@@ -6,8 +6,8 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from 'navigation/AppNavigator';
 
 import { useWeatherForCityQuery } from 'api/queries';
-import Screen from 'components/common/Screen';
 import { ErrorBanner } from 'components/ErrorBanner';
+import Screen from 'components/Screen';
 import { useFavoritesContext } from 'context/FavoritesContext';
 
 import Header from './components/Header';

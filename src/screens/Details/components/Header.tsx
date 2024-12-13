@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Text } from 'react-native-paper';
 
-import { FavoritesIcon } from 'components/common/FavoritesIcon';
+import { FavoritesIcon } from 'components/FavoritesIcon';
 
 interface HeaderProps {
   cityName: string;

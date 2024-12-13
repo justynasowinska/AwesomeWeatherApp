@@ -2,11 +2,10 @@ import { StyleSheet } from 'react-native';
 
 import { List, useTheme } from 'react-native-paper';
 
-import { FavoritesIcon } from 'components/common/FavoritesIcon';
+import { FavoritesIcon } from 'components/FavoritesIcon';
 import { createWeatherDescription } from 'utils/openWeatherHelpers';
 
 import { City, WeatherCity } from 'types/openWeather';
-
 
 import FavoriteCityItemRight from './FavoriteCityItemRight';
 

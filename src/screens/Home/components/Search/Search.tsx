@@ -1,8 +1,9 @@
 import { StyleSheet, View, ViewProps } from 'react-native';
 
-import { SearchInput, SearchResults } from 'components/Search';
-
 import { City, WeatherCity } from 'types/openWeather';
+
+import SearchInput from './SearchInput';
+import SearchResults from './SearchResults';
 
 interface SearchProps extends ViewProps {
   inputValue: string;

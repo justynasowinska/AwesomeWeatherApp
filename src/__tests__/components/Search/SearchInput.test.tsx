@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-import { SearchInput } from 'components/Search';
+import { SearchInput } from 'screens/Home/components/Search';
 
 describe('SearchInput', () => {
   it('renders correctly with default props', () => {
