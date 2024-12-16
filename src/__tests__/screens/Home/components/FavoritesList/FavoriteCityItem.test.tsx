@@ -23,11 +23,11 @@ const mockCity: WeatherCity = {
   clouds: { all: 0 },
 };
 
-describe('FavoriteCityItem', () => {
-  const mockOnRemove = jest.fn();
-  const mockOnPress = jest.fn();
+const mockOnRemove = jest.fn();
+const mockOnPress = jest.fn();
 
-  afterEach(() => {
+describe('FavoriteCityItem', () => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 

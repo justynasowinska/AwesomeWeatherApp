@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Text } from 'react-native';
 
 import { render, screen } from '@testing-library/react-native';
@@ -10,11 +11,10 @@ import useFavorites from 'hooks/useFavorites';
 
 import { City } from 'types/openWeather';
 
-
 jest.mock('hooks/useFavorites');
 
 describe('FavoritesProvider', () => {
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
@@ -56,7 +56,7 @@ describe('FavoritesProvider', () => {
         clearError,
       } = useFavoritesContext();
 
-      React.useEffect(() => {
+      useEffect(() => {
         addToFavorites(mockCity);
         removeFromFavorites(1);
         clearAllFavorites();

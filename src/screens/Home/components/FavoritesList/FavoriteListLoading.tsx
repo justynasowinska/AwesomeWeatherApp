@@ -4,7 +4,7 @@ import { ActivityIndicator, Text } from 'react-native-paper';
 
 const FavoriteListLoading = () => {
   return (
-    <View style={styles.emptyMessage}>
+    <View testID="favorite-list-loading" style={styles.emptyMessage}>
       <Text style={styles.loadingMessage} variant="titleLarge">
         Loading Your Favorites...
       </Text>

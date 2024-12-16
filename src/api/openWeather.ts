@@ -45,7 +45,7 @@ const searchCities = async (
 const getWeatherForCity = async ({
   lat,
   lon,
-}: Coordinates): Promise<OpenWeatherCityWeatherResponse> => {
+}: Coordinates): Promise<OpenWeatherCityWeatherResponse | null> => {
   const { data } = await axios.get(`${BASE_URL}/${API_ENDPOINTS.weather}`, {
     params: {
       lat,
@@ -58,7 +58,7 @@ const getWeatherForCity = async ({
 
 const getWeatherForManyCities = async (
   cityIds: number[],
-): Promise<OpenWeatherGroupCityWeatherResponse> => {
+): Promise<OpenWeatherGroupCityWeatherResponse | null> => {
   const { data } = await axios.get(`${BASE_URL}/${API_ENDPOINTS.group}`, {
     params: {
       id: cityIds.join(','),

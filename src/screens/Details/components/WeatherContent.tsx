@@ -8,7 +8,7 @@ import WeatherDetails from './WeatherDetails';
 interface WeatherContentProps {
   isLoading: boolean;
   error: Error | null;
-  data?: OpenWeatherCityWeatherResponse;
+  data?: OpenWeatherCityWeatherResponse | null;
 }
 
 const WeatherContent = ({ isLoading, error, data }: WeatherContentProps) => {

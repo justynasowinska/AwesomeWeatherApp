@@ -24,6 +24,7 @@ const FavoriteCityItemRight = ({
         }}
         size={70}
         style={styles.weatherIcon}
+        testID="avatar-image"
       />
     </View>
   );

@@ -40,6 +40,7 @@ const WeatherDetails = ({
         }}
         size={100}
         style={styles.weatherIcon}
+        testID="avatar-image"
       />
       <Text style={styles.temperature}>{temperatureCelsius}°C</Text>
       <Text style={styles.description}>{weatherDescription}</Text>

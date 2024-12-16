@@ -1,17 +1,24 @@
 import { NavigationContainer } from '@react-navigation/native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react-native';
 
 import AppNavigator from 'navigation/AppNavigator';
 
 import { FavoritesProvider } from 'context/FavoritesContext';
 
+jest.mock('axios');
+
 describe('AppNavigator', () => {
-  it('renders Home screen as the initial route', async () => {
+  const queryClient = new QueryClient();
+
+  it('renders correctly', async () => {
     render(
       <NavigationContainer>
-        <FavoritesProvider>
-          <AppNavigator />
-        </FavoritesProvider>
+        <QueryClientProvider client={queryClient}>
+          <FavoritesProvider>
+            <AppNavigator />
+          </FavoritesProvider>
+        </QueryClientProvider>
       </NavigationContainer>,
     );
 

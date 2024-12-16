@@ -6,13 +6,10 @@ import useFavorites from 'hooks/useFavorites';
 
 import { City } from 'types/openWeather';
 
-jest.mock('context/FavoritesContext');
-const mockUseAsyncStorage = useAsyncStorage as jest.MockedFunction<
-  typeof useAsyncStorage
->;
+const mockUseAsyncStorage = useAsyncStorage as jest.Mock;
 
 describe('useFavorites hook', () => {
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 

@@ -23,6 +23,7 @@ const Header = ({
         onPress={handleToggleFavorite}
         style={styles.favoriteButton}
         size={34}
+        testID="header-favorite-toggle"
         accessibilityLabel={
           isFavorite
             ? `Remove ${cityName} from favorites`
