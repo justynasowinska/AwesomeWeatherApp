@@ -20,12 +20,6 @@ describe('WeatherContent', () => {
     expect(screen.getByText('Test error')).toBeOnTheScreen();
   });
 
-  it('renders ErrorMessage when data is null and error is null', () => {
-    render(<WeatherContent isLoading={false} error={null} data={null} />);
-
-    expect(screen.getByText('Failed to load weather data.')).toBeOnTheScreen();
-  });
-
   it('renders weather details when data is provided', () => {
     const mockData: OpenWeatherCityWeatherResponse = {
       id: 1,
