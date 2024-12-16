@@ -69,7 +69,7 @@ const HomeScreen = () => {
         data={data?.list || []}
         isLoading={isLoading}
         error={error}
-        showResults={query.length >= MIN_QUERY_LENGTH}
+        showResults={query.length >= MIN_QUERY_LENGTH && !isLoading}
         onInputChange={handleInputChange}
         onCitySelect={handleCitySelect}
         onInputClear={handleInputClear}
