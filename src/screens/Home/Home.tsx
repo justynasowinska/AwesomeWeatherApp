@@ -57,9 +57,9 @@ const HomeScreen = () => {
     setQuery('');
   };
 
-  const handleCitySelect = (city: City) => {
+  const handleCitySelect = (city: City, fromFavorites?: boolean) => {
     handleInputClear();
-    navigation.navigate('Details', { city });
+    navigation.navigate('Details', { city, fromFavorites });
   };
 
   return (

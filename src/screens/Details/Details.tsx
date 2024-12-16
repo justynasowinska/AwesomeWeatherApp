@@ -1,20 +1,27 @@
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { RouteProp, useRoute } from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 
 import { RootStackParamList } from 'navigation/AppNavigator';
 
 import { useWeatherForCityQuery } from 'api/queries';
 import { ErrorBanner } from 'components/ErrorBanner';
+import { FavoritesButton } from 'components/FavoritesButton';
 import Screen from 'components/Screen';
 import { useFavoritesContext } from 'context/FavoritesContext';
 
-import Header from './components/Header';
 import WeatherContent from './components/WeatherContent';
 
 const DetailsScreen = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Details'>>();
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, 'Details'>>();
   const { city } = route.params;
   const {
     favorites,
@@ -34,7 +41,7 @@ const DetailsScreen = () => {
     lon: city.coord.lon,
   });
 
-  const handleToggleFavorite = () => {
+  const handleToggleFavorite = useCallback(() => {
     if (isFavoriteCity) {
       removeFromFavorites(city.id);
     } else {
@@ -45,7 +52,23 @@ const DetailsScreen = () => {
         sys: city.sys,
       });
     }
-  };
+  }, [city, isFavoriteCity, addToFavorites, removeFromFavorites]);
+
+  const renderHeaderRight = useCallback(
+    () => (
+      <FavoritesButton
+        isFavorite={isFavoriteCity}
+        onPress={handleToggleFavorite}
+      />
+    ),
+    [isFavoriteCity, handleToggleFavorite],
+  );
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: renderHeaderRight,
+    });
+  }, [navigation, renderHeaderRight]);
 
   return (
     <Screen>
@@ -54,11 +77,6 @@ const DetailsScreen = () => {
           visible={Boolean(favoritesError)}
           error={favoritesError}
           onClosePress={clearError}
-        />
-        <Header
-          cityName={city.name}
-          isFavorite={isFavoriteCity}
-          handleToggleFavorite={handleToggleFavorite}
         />
         <WeatherContent isLoading={isLoading} error={error} data={data} />
       </View>

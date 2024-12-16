@@ -15,7 +15,7 @@ interface FavoritesListProps
   isLoading: boolean;
   error: Error | null;
   onRemove: (cityId: number) => void;
-  onCitySelect: (city: City) => void;
+  onCitySelect: (city: City, fromFavorites: boolean) => void;
 }
 
 const FavoritesList = ({
@@ -34,6 +34,10 @@ const FavoritesList = ({
     return <FavoriteListError error={error} />;
   }
 
+  const handleCitySelect = (city: City) => {
+    onCitySelect(city, true);
+  };
+
   return (
     <FlatList
       data={favorites}
@@ -42,7 +46,7 @@ const FavoritesList = ({
         <FavoriteCityItem
           city={item}
           onRemove={onRemove}
-          onPress={onCitySelect}
+          onPress={handleCitySelect}
         />
       )}
       ItemSeparatorComponent={Divider}
