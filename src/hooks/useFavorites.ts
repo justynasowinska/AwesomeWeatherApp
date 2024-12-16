@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 
@@ -27,38 +27,44 @@ const useFavorites = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const addToFavorites = async (city: City) => {
-    try {
-      const updatedFavorites = [...favorites, city];
-      await setItem(JSON.stringify(updatedFavorites));
-      setFavorites(updatedFavorites);
-    } catch (e) {
-      setError('Failed to add favorite');
-    }
-  };
+  const addToFavorites = useCallback(
+    async (city: City) => {
+      try {
+        const updatedFavorites = [...favorites, city];
+        await setItem(JSON.stringify(updatedFavorites));
+        setFavorites(updatedFavorites);
+      } catch (e) {
+        setError('Failed to add favorite');
+      }
+    },
+    [favorites, setItem],
+  );
 
-  const removeFromFavorites = async (cityId: number) => {
-    try {
-      const updatedFavorites = favorites.filter(city => city.id !== cityId);
-      await setItem(JSON.stringify(updatedFavorites));
-      setFavorites(updatedFavorites);
-    } catch (e) {
-      setError('Failed to remove favorite');
-    }
-  };
+  const removeFromFavorites = useCallback(
+    async (cityId: number) => {
+      try {
+        const updatedFavorites = favorites.filter(city => city.id !== cityId);
+        await setItem(JSON.stringify(updatedFavorites));
+        setFavorites(updatedFavorites);
+      } catch (e) {
+        setError('Failed to remove favorite');
+      }
+    },
+    [favorites, setItem],
+  );
 
-  const clearAllFavorites = async () => {
+  const clearAllFavorites = useCallback(async () => {
     try {
       await removeItem();
       setFavorites([]);
     } catch (e) {
       setError('Failed to clear favorites');
     }
-  };
+  }, [removeItem]);
 
-  const clearError = () => {
+  const clearError = useCallback(() => {
     setError(null);
-  };
+  }, []);
 
   return {
     favorites: favorites,

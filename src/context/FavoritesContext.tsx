@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 
 import useFavorites from 'hooks/useFavorites';
 
@@ -29,16 +29,27 @@ export const FavoritesProvider: React.FC<React.PropsWithChildren<{}>> = ({
     clearError,
   } = useFavorites();
 
+  const contextValue = useMemo(
+    () => ({
+      favorites,
+      error,
+      addToFavorites,
+      removeFromFavorites,
+      clearAllFavorites,
+      clearError,
+    }),
+    [
+      favorites,
+      error,
+      addToFavorites,
+      removeFromFavorites,
+      clearAllFavorites,
+      clearError,
+    ],
+  );
+
   return (
-    <FavoritesContext.Provider
-      value={{
-        favorites,
-        error,
-        addToFavorites,
-        removeFromFavorites,
-        clearAllFavorites,
-        clearError,
-      }}>
+    <FavoritesContext.Provider value={contextValue}>
       {children}
     </FavoritesContext.Provider>
   );
