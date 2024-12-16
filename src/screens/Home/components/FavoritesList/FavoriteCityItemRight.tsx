@@ -1,8 +1,9 @@
 import { StyleSheet, View } from 'react-native';
 
-import { Avatar, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 
-import { getWeatherIconUrl, kelvinToCelsius } from 'utils/openWeatherHelpers';
+import { WeatherIcon } from 'components/WeatherIcon';
+import { kelvinToCelsius } from 'utils/openWeatherHelpers';
 
 interface FavoriteCityItemRightProps {
   icon: string;
@@ -18,10 +19,8 @@ const FavoriteCityItemRight = ({
       <Text variant="headlineMedium" style={styles.temperature}>
         {kelvinToCelsius(temperature)}°C
       </Text>
-      <Avatar.Image
-        source={{
-          uri: getWeatherIconUrl(icon),
-        }}
+      <WeatherIcon
+        icon={icon}
         size={70}
         style={styles.weatherIcon}
         testID="avatar-image"

@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { Avatar, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 
+import { WeatherIcon } from 'components/WeatherIcon';
 import {
   createWeatherDescription,
-  getWeatherIconUrl,
   kelvinToCelsius,
 } from 'utils/openWeatherHelpers';
 
@@ -34,10 +34,8 @@ const WeatherDetails = ({
 
   return (
     <View style={styles.container}>
-      <Avatar.Image
-        source={{
-          uri: getWeatherIconUrl(icon),
-        }}
+      <WeatherIcon
+        icon={icon}
         size={100}
         style={styles.weatherIcon}
         testID="avatar-image"
