@@ -7,7 +7,6 @@ import BootSplash from 'react-native-bootsplash';
 import { PaperProvider } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-
 import OfflineBanner from 'components/OfflineBanner/OfflineBanner';
 import { FavoritesProvider } from 'context/FavoritesContext';
 
