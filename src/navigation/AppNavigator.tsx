@@ -26,6 +26,7 @@ const AppNavigator = () => {
         component={DetailsScreen}
         options={{
           headerTintColor: colors.primary,
+          headerBackButtonDisplayMode: 'minimal',
         }}
       />
     </Stack.Navigator>
