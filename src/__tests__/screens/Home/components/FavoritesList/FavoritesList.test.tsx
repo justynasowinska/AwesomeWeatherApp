@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { render, screen } from '@testing-library/react-native';
 
 import { FavoritesList } from 'screens/Home/components/FavoritesList';

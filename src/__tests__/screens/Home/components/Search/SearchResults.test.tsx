@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { render, screen } from '@testing-library/react-native';
 
 import SearchResultsDropdown from 'screens/Home/components/Search/SearchResults';

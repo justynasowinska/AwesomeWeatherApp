@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { render, screen } from '@testing-library/react-native';
 
 import FavoriteCityItemRight from 'screens/Home/components/FavoritesList/FavoriteCityItemRight';

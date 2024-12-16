@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { render, screen } from '@testing-library/react-native';
 

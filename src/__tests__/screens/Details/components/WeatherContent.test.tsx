@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { render, screen } from '@testing-library/react-native';
 
 import WeatherContent from 'screens/Details/components/WeatherContent';
