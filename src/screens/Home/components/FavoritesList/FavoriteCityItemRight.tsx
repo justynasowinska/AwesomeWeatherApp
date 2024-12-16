@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: 16,
   },
   weatherIcon: {
     backgroundColor: 'transparent',

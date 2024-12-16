@@ -17,7 +17,9 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <View style={styles.header}>
-      <Text style={styles.cityName}>{cityName}</Text>
+      <Text style={styles.cityName} ellipsizeMode="tail" numberOfLines={2}>
+        {cityName}
+      </Text>
       <FavoritesIcon
         isFavorite={isFavorite}
         onPress={handleToggleFavorite}
