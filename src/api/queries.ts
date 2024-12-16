@@ -29,6 +29,7 @@ const useWeatherForCityQuery = ({ lat, lon }: WeatherForCityParams) => {
   return useQuery({
     queryKey: ['city-weather', lat, lon],
     queryFn: () => getWeatherForCity({ lat, lon }),
+    enabled: typeof lat === 'number' && typeof lon === 'number',
   });
 };
 
@@ -36,6 +37,7 @@ const useGetWeatherForManyQuery = (cityIds: number[]) => {
   return useQuery({
     queryKey: ['cities-weather', cityIds],
     queryFn: () => getWeatherForManyCities(cityIds),
+    enabled: cityIds.length > 0,
   });
 };
 
