@@ -23,13 +23,21 @@ const useCitiesQuery = (query: string) => {
 type WeatherForCityParams = {
   lat: number;
   lon: number;
+  enabled: boolean;
 };
 
-const useWeatherForCityQuery = ({ lat, lon }: WeatherForCityParams) => {
+const useWeatherForCityQuery = ({
+  lat,
+  lon,
+  enabled,
+}: WeatherForCityParams) => {
+  const isEnabled =
+    typeof lat === 'number' && typeof lon === 'number' && enabled;
+
   return useQuery({
     queryKey: ['city-weather', lat, lon],
     queryFn: () => getWeatherForCity({ lat, lon }),
-    enabled: typeof lat === 'number' && typeof lon === 'number',
+    enabled: isEnabled,
   });
 };
 

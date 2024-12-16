@@ -21,10 +21,14 @@ const WeatherContent = ({ isLoading, error, data }: WeatherContentProps) => {
     );
   }
 
-  if (error || !data) {
+  if (error) {
     return (
       <ErrorMessage error={error?.message || 'Failed to load weather data.'} />
     );
+  }
+
+  if (!data) {
+    return null;
   }
 
   return (

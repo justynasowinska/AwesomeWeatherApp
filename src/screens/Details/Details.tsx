@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { InteractionManager, StyleSheet, View } from 'react-native';
 
 import {
   NavigationProp,
@@ -23,6 +23,7 @@ const DetailsScreen = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, 'Details'>>();
   const { city } = route.params;
+  const [transititionFinished, setTransitionFinished] = useState(false);
   const {
     favorites,
     error: favoritesError,
@@ -31,15 +32,24 @@ const DetailsScreen = () => {
     clearError,
   } = useFavoritesContext();
 
-  const isFavoriteCity = useMemo(
-    () => favorites.some(favorite => favorite.id === city.id),
-    [city, favorites],
-  );
+  useEffect(() => {
+    const task = InteractionManager.runAfterInteractions(() => {
+      setTransitionFinished(true);
+    });
+
+    return () => task.cancel();
+  }, []);
 
   const { data, isLoading, error } = useWeatherForCityQuery({
     lat: city.coord.lat,
     lon: city.coord.lon,
+    enabled: transititionFinished,
   });
+
+  const isFavoriteCity = useMemo(
+    () => favorites.some(favorite => favorite.id === city.id),
+    [city, favorites],
+  );
 
   const handleToggleFavorite = useCallback(() => {
     if (isFavoriteCity) {
