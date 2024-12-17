@@ -1,3 +1,5 @@
+import { StyleSheet } from 'react-native';
+
 import { ActivityIndicator } from 'react-native-paper';
 
 import { OpenWeatherCityWeatherResponse } from 'types/openWeather';
@@ -15,7 +17,8 @@ const WeatherContent = ({ isLoading, error, data }: WeatherContentProps) => {
   if (isLoading) {
     return (
       <ActivityIndicator
-        size="large"
+        size="small"
+        style={styles.loader}
         accessibilityLabel="Loading weather data"
       />
     );
@@ -39,5 +42,11 @@ const WeatherContent = ({ isLoading, error, data }: WeatherContentProps) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  loader: {
+    margin: 26,
+  },
+});
 
 export default WeatherContent;
