@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import { getCityWeatherMockResponse } from '__mocks__/getCityWeatherMockResponse';
-import { searchCitiesMockResponse } from '__mocks__/searchCitiesMockResponse';
+import { getCityWeatherMockResponse } from '__tests__/api/getCityWeatherMockResponse';
+import { searchCitiesMockResponse } from '__tests__/api/searchCitiesMockResponse';
 
 import {
   API_ENDPOINTS,
