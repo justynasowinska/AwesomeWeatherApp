@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { Text } from 'react-native-paper';
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WeatherDetails;
+export default memo(WeatherDetails);

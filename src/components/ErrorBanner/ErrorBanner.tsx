@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Banner, Text } from 'react-native-paper';
@@ -38,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ErrorBanner;
+export default memo(ErrorBanner);

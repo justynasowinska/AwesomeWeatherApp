@@ -1,3 +1,4 @@
+import { memo, useCallback } from 'react';
 import { FlatList, FlatListProps, StyleSheet } from 'react-native';
 
 import { Divider } from 'react-native-paper';
@@ -26,6 +27,13 @@ const FavoritesList = ({
   onCitySelect,
   ...props
 }: FavoritesListProps) => {
+  const handleCitySelect = useCallback(
+    (city: City) => {
+      onCitySelect(city, true);
+    },
+    [onCitySelect],
+  );
+
   if (isLoading && !favorites) {
     return <FavoriteListLoading />;
   }
@@ -33,10 +41,6 @@ const FavoritesList = ({
   if (error) {
     return <FavoriteListError error={error} />;
   }
-
-  const handleCitySelect = (city: City) => {
-    onCitySelect(city, true);
-  };
 
   return (
     <FlatList
@@ -65,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FavoritesList;
+export default memo(FavoritesList);

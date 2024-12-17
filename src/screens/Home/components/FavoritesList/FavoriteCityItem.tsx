@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { List, useTheme } from 'react-native-paper';
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FavoriteCityItem;
+export default memo(FavoriteCityItem);

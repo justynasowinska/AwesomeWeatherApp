@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { useNetInfo } from '@react-native-community/netinfo';
@@ -41,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OfflineBanner;
+export default memo(OfflineBanner);

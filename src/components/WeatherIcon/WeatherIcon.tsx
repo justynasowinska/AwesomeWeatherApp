@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { Avatar, AvatarImageProps } from 'react-native-paper';
 
 import { getWeatherIconUrl } from 'utils/openWeatherHelpers';
@@ -19,4 +21,4 @@ const WeatherIcon = ({ icon, ...props }: WeatherIconProps) => {
   );
 };
 
-export default WeatherIcon;
+export default memo(WeatherIcon);
