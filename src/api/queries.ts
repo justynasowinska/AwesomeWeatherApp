@@ -14,11 +14,18 @@ import {
  */
 const MIN_QUERY_LENGTH = 3;
 
+/**
+ * Weather data updates roughly every 10 minutes.
+ */
+const TEN_MINUTES = 1000 * 60 * 10;
+
 const useCitiesQuery = (query: string) => {
   return useQuery({
     queryKey: ['cities', query],
     queryFn: () => searchCities(query),
     enabled: query.length >= MIN_QUERY_LENGTH,
+    staleTime: Infinity,
+    gcTime: 1000 * 60 * 60, // 1 hour
   });
 };
 
@@ -40,6 +47,7 @@ const useWeatherForCityQuery = ({
     queryKey: ['city-weather', lat, lon],
     queryFn: () => getWeatherForCity({ lat, lon }),
     enabled: isEnabled,
+    staleTime: TEN_MINUTES,
   });
 };
 
@@ -50,6 +58,7 @@ const useGetWeatherForManyQuery = (cityIds: number[]) => {
     queryKey: ['cities-weather', cityIds],
     queryFn: () => getWeatherForManyCities(cityIds),
     enabled: cityIds.length > 0,
+    staleTime: TEN_MINUTES,
     placeholderData: () => {
       if (cityIds.length === 0) {
         return { list: [] };
