@@ -21,27 +21,6 @@ const SearchResultsDropdown = ({
 }: SearchResultsDropdownProps) => {
   const { colors } = useTheme();
 
-  const renderContent = () => {
-    if (error) {
-      return <SearchResultsError error={error} />;
-    }
-
-    return (
-      <FlatList
-        data={data}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({ item }) => (
-          <SearchResultsItem city={item} onPress={() => onCitySelect(item)} />
-        )}
-        ListEmptyComponent={<SearchResultsEmpty />}
-        ItemSeparatorComponent={Divider}
-        keyboardShouldPersistTaps="handled"
-        accessibilityLabel="Search results list"
-        accessibilityHint="Select a city from the list to see its weather forecast"
-      />
-    );
-  };
-
   return (
     <View
       style={[
@@ -49,7 +28,22 @@ const SearchResultsDropdown = ({
         { backgroundColor: colors.background, borderColor: colors.surface },
       ]}
       testID="search-results">
-      {renderContent()}
+      {error ? (
+        <SearchResultsError error={error} />
+      ) : (
+        <FlatList
+          data={data}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({ item }) => (
+            <SearchResultsItem city={item} onPress={onCitySelect} />
+          )}
+          ListEmptyComponent={<SearchResultsEmpty />}
+          ItemSeparatorComponent={Divider}
+          keyboardShouldPersistTaps="handled"
+          accessibilityLabel="Search results list"
+          accessibilityHint="Select a city from the list to see its weather forecast"
+        />
+      )}
     </View>
   );
 };

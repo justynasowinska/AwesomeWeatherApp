@@ -50,10 +50,10 @@ const HomeScreen = () => {
     [debouncedSetQuery],
   );
 
-  const handleInputClear = () => {
+  const handleInputClear = useCallback(() => {
     setInputValue('');
     setQuery('');
-  };
+  }, []);
 
   const handleCitySelect = (city: City, fromFavorites?: boolean) => {
     handleInputClear();
