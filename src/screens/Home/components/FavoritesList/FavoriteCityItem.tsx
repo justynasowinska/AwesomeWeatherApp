@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { List, useTheme } from 'react-native-paper';
@@ -21,30 +22,45 @@ const FavoriteCityItem = ({
   onPress,
 }: FavoriteCityItemProps) => {
   const { colors } = useTheme();
-  const renderRightContent = () => (
-    <FavoriteCityItemRight
-      icon={city.weather[0].icon}
-      temperature={city.main.temp}
-    />
+  const icon = city.weather[0].icon;
+  const weatherDescription = useMemo(
+    () => createWeatherDescription(city.weather),
+    [city.weather],
   );
 
-  const renderLeftContent = () => (
-    <FavoritesIcon
-      isFavorite
-      onPress={() => onRemove(city.id)}
-      style={styles.favoriteIcon}
-    />
+  const renderRightContent = useCallback(
+    () => <FavoriteCityItemRight icon={icon} temperature={city.main.temp} />,
+    [icon, city.main.temp],
   );
+
+  const handleRemove = useCallback(() => {
+    onRemove(city.id);
+  }, [city.id, onRemove]);
+
+  const renderLeftContent = useCallback(
+    () => (
+      <FavoritesIcon
+        isFavorite
+        onPress={handleRemove}
+        style={styles.favoriteIcon}
+      />
+    ),
+    [handleRemove],
+  );
+
+  const handlePress = useCallback(() => {
+    onPress(city);
+  }, [city, onPress]);
 
   return (
     <List.Item
       title={`${city.name}, ${city.sys.country}`}
-      description={createWeatherDescription(city.weather)}
+      description={weatherDescription}
       descriptionStyle={[styles.description, { color: colors.onSurface }]}
       left={renderLeftContent}
       right={renderRightContent}
       style={[styles.item, { backgroundColor: colors.surface }]}
-      onPress={() => onPress(city)}
+      onPress={handlePress}
       contentStyle={styles.content}
     />
   );
