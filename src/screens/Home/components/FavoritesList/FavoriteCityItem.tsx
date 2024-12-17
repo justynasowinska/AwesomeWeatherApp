@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { List, useTheme } from 'react-native-paper';
@@ -28,29 +28,19 @@ const FavoriteCityItem = ({
     [city.weather],
   );
 
-  const renderRightContent = useCallback(
-    () => <FavoriteCityItemRight icon={icon} temperature={city.main.temp} />,
-    [icon, city.main.temp],
+  const renderRightContent = () => (
+    <FavoriteCityItemRight icon={icon} temperature={city.main.temp} />
   );
 
-  const handleRemove = useCallback(() => {
-    onRemove(city.id);
-  }, [city.id, onRemove]);
-
-  const renderLeftContent = useCallback(
-    () => (
-      <FavoritesIcon
-        isFavorite
-        onPress={handleRemove}
-        style={styles.favoriteIcon}
-      />
-    ),
-    [handleRemove],
+  const renderLeftContent = () => (
+    <FavoritesIcon
+      isFavorite
+      onPress={() => {
+        onRemove(city.id);
+      }}
+      style={styles.favoriteIcon}
+    />
   );
-
-  const handlePress = useCallback(() => {
-    onPress(city);
-  }, [city, onPress]);
 
   return (
     <List.Item
@@ -60,7 +50,9 @@ const FavoriteCityItem = ({
       left={renderLeftContent}
       right={renderRightContent}
       style={[styles.item, { backgroundColor: colors.surface }]}
-      onPress={handlePress}
+      onPress={() => {
+        onPress(city);
+      }}
       contentStyle={styles.content}
     />
   );
@@ -86,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(FavoriteCityItem);
+export default FavoriteCityItem;

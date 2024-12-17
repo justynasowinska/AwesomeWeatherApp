@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 import { IconButton, IconButtonProps, useTheme } from 'react-native-paper';
 
 interface FavoritesIconProps extends Omit<IconButtonProps, 'icon'> {
@@ -21,4 +19,4 @@ const FavoritesIcon = ({ isFavorite, ...props }: FavoritesIconProps) => {
   );
 };
 
-export default memo(FavoritesIcon);
+export default FavoritesIcon;
