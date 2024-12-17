@@ -19,6 +19,16 @@ class TestComponent extends Component {
 }
 
 describe('ErrorBoundary', () => {
+  const err = console.error;
+  beforeEach(() => {
+    // Silent console.error for this test
+    console.error = jest.fn();
+  });
+
+  afterAll(() => {
+    console.error = err;
+  });
+
   it('renders without error', () => {
     render(
       <ErrorBoundary
