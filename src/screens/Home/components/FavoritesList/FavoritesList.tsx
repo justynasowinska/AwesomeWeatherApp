@@ -1,7 +1,5 @@
 import { FlatList, FlatListProps, StyleSheet } from 'react-native';
 
-import { Divider } from 'react-native-paper';
-
 import { City, WeatherCity } from 'types/openWeather';
 
 import FavoriteCityItem from './FavoriteCityItem';
@@ -49,7 +47,6 @@ const FavoritesList = ({
           onPress={handleCitySelect}
         />
       )}
-      ItemSeparatorComponent={Divider}
       ListEmptyComponent={<FavoriteListEmpty />}
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
