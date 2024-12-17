@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 import { useQuery } from '@tanstack/react-query';
 
 import {
@@ -42,11 +44,30 @@ const useWeatherForCityQuery = ({
 };
 
 const useGetWeatherForManyQuery = (cityIds: number[]) => {
-  return useQuery({
+  const previousDataRef = useRef<any>(null);
+
+  const queryResult = useQuery({
     queryKey: ['cities-weather', cityIds],
     queryFn: () => getWeatherForManyCities(cityIds),
     enabled: cityIds.length > 0,
+    placeholderData: () => {
+      if (cityIds.length === 0) {
+        return { list: [] };
+      }
+
+      return previousDataRef.current ?? { list: [] };
+    },
   });
+
+  useEffect(() => {
+    if (queryResult.data) {
+      previousDataRef.current = queryResult.data;
+    } else if (cityIds.length === 0) {
+      previousDataRef.current = null;
+    }
+  }, [queryResult.data, cityIds]);
+
+  return queryResult;
 };
 
 export {

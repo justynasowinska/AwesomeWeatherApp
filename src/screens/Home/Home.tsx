@@ -35,8 +35,6 @@ const HomeScreen = () => {
     data: dataFavoritesWeather,
     error: errorFavoritesWeathers,
     isLoading: loadingFavoritesWeathers,
-    isRefetching: isFavoritesRefetching,
-    refetch,
   } = useGetWeatherForManyQuery(cityIds);
 
   const debouncedSetQuery = useMemo(
@@ -82,8 +80,6 @@ const HomeScreen = () => {
         testID="favorites-list"
         isLoading={loadingFavoritesWeathers}
         error={errorFavoritesWeathers}
-        refreshing={isFavoritesRefetching}
-        onRefresh={refetch}
       />
     </Screen>
   );
