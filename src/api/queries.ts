@@ -72,7 +72,7 @@ const useGetWeatherForManyQuery = (cityIds: number[]) => {
     if (queryResult.data) {
       previousDataRef.current = queryResult.data;
     } else if (cityIds.length === 0) {
-      previousDataRef.current = [];
+      previousDataRef.current = { list: [] };
     }
   }, [queryResult.data, cityIds]);
 
