@@ -52,7 +52,7 @@ const useWeatherForCityQuery = ({
 };
 
 const useGetWeatherForManyQuery = (cityIds: number[]) => {
-  const previousDataRef = useRef<any>(null);
+  const previousDataRef = useRef<any>([]);
 
   const queryResult = useQuery({
     queryKey: ['cities-weather', cityIds],
@@ -72,7 +72,7 @@ const useGetWeatherForManyQuery = (cityIds: number[]) => {
     if (queryResult.data) {
       previousDataRef.current = queryResult.data;
     } else if (cityIds.length === 0) {
-      previousDataRef.current = null;
+      previousDataRef.current = [];
     }
   }, [queryResult.data, cityIds]);
 
